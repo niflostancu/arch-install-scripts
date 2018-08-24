@@ -1,0 +1,24 @@
+[Desktop Entry]
+DefaultProfile=Niflo.profile
+
+[Favorite Profiles]
+Favorites=Niflo.profile
+
+[KonsoleWindow]
+ShowMenuBarByDefault=false
+
+[MainWindow]
+Height 1080=860
+Height 768=705
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAQ4AAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+Width 1024=1016
+Width 1920=1427
+Window-Maximized 1080x1920=true
+
+[Notification Messages]
+CloseAllTabs=true
+
+[TabBar]
+TabBarVisibility=ShowTabBarWhenNeeded

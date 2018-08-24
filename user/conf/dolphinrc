@@ -1,0 +1,40 @@
+[CompactMode]
+FontWeight=50
+
+[DetailsMode]
+FontWeight=50
+IconSize=32
+PreviewSize=32
+
+[General]
+GlobalViewProps=true
+ShowFullPath=true
+Version=200
+ViewPropsTimestamp=2016,3,19,21,54,34
+
+[IconsMode]
+FontWeight=50
+
+[KPropertiesDialog]
+Height 1080=467
+Width 1920=453
+
+[MainWindow]
+Height 1080=1046
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAwAAAAAAAADMAAAD8PwCAAAAAvsAAAAWAGYAbwBsAGQAZQByAHMARABvAGMAawAAAAAA/////wAAAAoBAAAD+wAAABQAcABsAGEAYwBlAHMARABvAGMAawEAAAAmAAAD8AAAAFoBAAADAAAAAQAAAAAAAAAA/AIAAAAB+wAAABAAaQBuAGYAbwBEAG8AYwBrAAAAAAD/////AAAACgEAAAMAAAADAAAAAAAAAAD8AQAAAAH7AAAAGAB0AGUAcgBtAGkAbgBhAGwARABvAGMAawAAAAAA/////wAAAAoBAAADAAAGswAAA/AAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAACAAAAAQAAABYAbQBhAGkAbgBUAG8AbwBsAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+ToolBarsMovable=Disabled
+Width 1920=1920
+Window-Maximized 1080x1920=true
+Window-Maximized 768x1024=true
+
+[Open-with settings]
+CompletionMode=5
+History=vlc,packettracer,libreoffice --calc %U,kate,dragon,kwrite
+
+[PreviewSettings]
+Plugins=directorythumbnail,imagethumbnail,jpegthumbnail
+
+[SettingsDialog]
+Height 1080=383
+Width 1920=512
