@@ -1,0 +1,19 @@
+#!/bin/bash
+# Example installer module
+
+# executed during the first phase: prerequisites installation
+function do_install_prerequisites() {
+    # install_pkg vim git sudo rsync curl wget
+    return 0
+}
+
+# executed during the second phase: secondary installation
+function do_install_secondary() {
+    return 0
+}
+
+# configures the package(s) as the last phase executed
+function do_configure() {
+    return 0
+}
+
