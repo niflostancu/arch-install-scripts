@@ -8,7 +8,7 @@ function do_configure() {
     fi
 
     # Copy the X profile
-    if [[ -f "$SRC_DIR/conf/xprofile" ]]; then
+    if [[ -f "$SRC_DIR/conf.$PROFILE/xprofile" ]]; then
         idem_rsync "$SRC_DIR/conf.$PROFILE/xprofile" "$XDG_CONFIG_HOME/xprofile"
     fi
     if [[ ! -f ~/.xprofile ]]; then

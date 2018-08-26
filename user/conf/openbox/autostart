@@ -1,0 +1,6 @@
+# Allow quitting the X server with CTRL-ATL-Backspace
+setxkbmap -option terminate:ctrl_alt_bksp
+
+# run alacritty!
+TMUX=0 alacritty
+
