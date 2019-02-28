@@ -8,7 +8,7 @@ function do_install_prerequisites() {
 
     # Libvirt, Qemu
     install_pkgs qemu ebtables qemu-arch-extra libvirt virt-manager 
-    install_yaourt_pkgs qemu-user-static-bin binfmt-qemu-static
+    install_aur_pkgs qemu-user-static-bin binfmt-qemu-static
 
     # Vagrant
     install_pkgs vagrant packer-io

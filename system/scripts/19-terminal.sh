@@ -7,7 +7,7 @@ function do_install_prerequisites() {
         the_silver_searcher screen minicom ruby fzf python-virtualenvwrapper xdotool \
         ctags
 
-    install_yaourt_pkgs alacritty-git
+    install_aur_pkgs alacritty-git
 }
 
 function do_configure() {

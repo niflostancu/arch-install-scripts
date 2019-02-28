@@ -16,9 +16,9 @@ function install_pkgs() {
     pacman -S --needed --noconfirm "${pkgs_found[@]}"
 }
 
-# Yaourt wrapper to be ran as root
-function install_yaourt_pkgs() {
-    sudo -u "$SUDO_USER" -- yaourt -S --needed --noconfirm "$@"
+# Installs packages from AUR (uses YaY)
+function install_aur_pkgs() {
+    sudo -u "$SUDO_USER" -- yay -S --needed --noconfirm "$@"
 }
 
 function show_pkg_warnings() {

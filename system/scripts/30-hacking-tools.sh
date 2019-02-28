@@ -20,6 +20,6 @@ function do_install_prerequisites() {
     # Misc tools
     install_pkgs gnuplot rlwrap powertop dmidecode diff-so-fancy \
         units gparted jq
-    install_yaourt_pkgs shc
+    install_aur_pkgs shc
 }
 

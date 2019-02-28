@@ -30,10 +30,10 @@ function do_install_prerequisites() {
 	# Embedded / uC
 	install_pkgs minicom cutecom avr-gcc avr-libc avrdude \
 		arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib
-	install_yaourt_pkgs openocd
+	install_aur_pkgs openocd
 	# Sigrok for logic analyzers
 	install_pkgs pulseview
-	install_yaourt_pkgs openocd sigrok-cli sigrok-firmware-fx2lafw-bin 
+	install_aur_pkgs openocd sigrok-cli sigrok-firmware-fx2lafw-bin 
 }
 
 # Copy configuration files to /etc 
