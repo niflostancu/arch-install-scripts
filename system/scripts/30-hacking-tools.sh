@@ -8,7 +8,7 @@ function do_install_prerequisites() {
 
     # Network tools
     install_pkgs bind-tools nmap aircrack-ng traceroute wireshark-qt wol \
-        lftp whois iperf iperf3 dsniff tcpdump arp-scan
+        lftp whois iperf iperf3 dsniff tcpdump arp-scan tftp-hpa
 
     # System monitoring
     install_pkgs htop iotop powertop

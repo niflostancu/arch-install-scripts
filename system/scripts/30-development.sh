@@ -14,7 +14,7 @@ function do_install_prerequisites() {
 
 	# Java
 	install_pkgs maven scala gradle
-	install_yaourt_pkgs jre jdk jdk9
+	install_pkgs jdk-openjdk
 
 	# Python 3
 	install_pkgs python python-pip flake8 python-pylint python-pytest python-virtualenv

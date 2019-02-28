@@ -7,11 +7,14 @@ function do_install_prerequisites() {
     install_pkgs docker docker-compose debootstrap
 
     # Libvirt, Qemu
-    install_pkgs qemu qemu-arch-extra libvirt virt-manager 
-    install_yaourt_pkgs qemu-user-static binfmt-qemu-static
+    install_pkgs qemu ebtables qemu-arch-extra libvirt virt-manager 
+    install_yaourt_pkgs qemu-user-static-bin binfmt-qemu-static
 
     # Vagrant
     install_pkgs vagrant packer-io
+
+    # X11 / VNC tools
+    install_pkgs nxagent xpra xorg-xinit xorg-server-xvfb
 }
 
 function do_configure() {

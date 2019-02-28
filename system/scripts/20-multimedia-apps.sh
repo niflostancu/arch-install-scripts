@@ -8,7 +8,7 @@ function do_install_prerequisites() {
         phonon-qt5-vlc lame cdrtools cdrdao dvd+rw-tools k3b digikam \
         cantata mpd
     # Image manipulation
-    install_pkgs gimp imagemagick inkscape 
+    install_pkgs gimp imagemagick inkscape dia
     # Music / video editing / conversion
     install_pkgs ffmpeg youtube-dl kid3
 }
