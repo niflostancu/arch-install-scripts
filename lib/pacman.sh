@@ -5,6 +5,9 @@
 # phase
 PKG_WARNINGS=()
 
+# The unprivileged user used for building AUR packages
+BUILD_USER=aurbuild
+
 # Installs the specified packages (best-effort, does not fail if one package
 # doesn't exist, just adds to PKG_WARNINGS).
 function install_pkgs() {
@@ -18,7 +21,7 @@ function install_pkgs() {
 
 # Installs packages from AUR (uses YaY)
 function install_aur_pkgs() {
-    sudo -u "$SUDO_USER" -- yay -S --needed --noconfirm "$@"
+    sudo -u "$BUILD_USER" -- yay -S --needed --noconfirm "$@"
 }
 
 function show_pkg_warnings() {
