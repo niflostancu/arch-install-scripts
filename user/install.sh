@@ -19,10 +19,10 @@ fi
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
-PROFILE="$(cat /etc/machine-type | head -n 1)"
+PROFILE="$(cat /etc/machine-profile | head -n 1)"
 
 if [[ -z "$PROFILE" ]]; then
-	echo "Please fill out /etc/machine-type with the machine's profile name!"
+	echo "Please fill out /etc/machine-profile with the machine's profile name!"
 	exit 1
 fi
 
