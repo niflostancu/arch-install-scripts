@@ -20,11 +20,6 @@ function do_install_prerequisites() {
 function do_configure() {
     systemctl enable docker
     systemctl enable libvirtd
-    if [[ -n "$SUDO_USER" ]]; then
-        gpasswd -a $SUDO_USER docker
-        gpasswd -a $SUDO_USER wheel
-        gpasswd -a $SUDO_USER users
-    fi
 
     # Allow wheel to use libvirt freely
     idem_rsync "$SRC_DIR/etc/polkit-1/rules.d/50-libvirt.rules" /etc/polkit-1/rules.d/50-libvirt.rules
