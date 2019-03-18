@@ -11,6 +11,8 @@ function do_install_prerequisites() {
 
 function do_configure() {
     systemctl enable bluetooth
+    
+    idem_rsync "$SRC_DIR/etc/bluetooth/main.conf" "/etc/bluetooth/main.conf"
 
     true
 }
