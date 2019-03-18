@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     install_pkgs clementine vlc gstreamer gst-plugins-good \
-        gst-plugins-ugly phonon-qt5-gstreamer phonon-qt4-gstreamer phonon-qt4-vlc \
+        gst-plugins-ugly phonon-qt5-gstreamer gst-libav \
         phonon-qt5-vlc lame cdrtools cdrdao dvd+rw-tools k3b digikam \
         cantata mpd
     # Image manipulation

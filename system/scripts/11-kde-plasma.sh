@@ -7,7 +7,7 @@ function do_install_prerequisites() {
         kde-gtk-config
     # Misc apps
     install_pkgs rsibreak redshift plasma5-applets-redshift-control 
-    install_aur_pkgs diskmonitor
+    install_aur_pkgs diskmonitor plasma5-applets-eventcalendar
 }
 
 function do_configure() {
