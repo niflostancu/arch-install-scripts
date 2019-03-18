@@ -33,11 +33,8 @@ server_names = ['cloudflare', 'dnscrypt.me', 'ipredator']
 #listen_addresses = []
 listen_addresses = ['127.0.0.1:53', '[::1]:53']
 
-
 ## Maximum number of simultaneous client connections to accept
-
 max_clients = 250
-
 
 ## Require servers (from static + remote sources) to satisfy specific properties
 
@@ -230,35 +227,22 @@ block_ipv6 = false
 ###########################
 
 ## Enable a DNS cache to reduce latency and outgoing traffic
-
 cache = true
 
-
 ## Cache size
-
 cache_size = 512
 
-
 ## Minimum TTL for cached entries
-
-cache_min_ttl = 600
-
+cache_min_ttl = 300
 
 ## Maximum TTL for cached entries
-
 cache_max_ttl = 86400
 
-
 ## Minimum TTL for negatively cached entries
-
 cache_neg_min_ttl = 60
 
-
 ## Maximum TTL for negatively cached entries
-
 cache_neg_max_ttl = 600
-
-
 
 ###############################
 #        Query logging        #
@@ -267,16 +251,11 @@ cache_neg_max_ttl = 600
 ## Log client queries to a file
 
 [query_log]
-
   ## Path to the query log file (absolute, or relative to the same directory as the executable file)
-
   # file = '/var/log/dnscrypt-proxy/query.log'
 
-
   ## Query log format (currently supported: tsv and ltsv)
-
   format = 'tsv'
-
 
   ## Do not log these query types, to reduce verbosity. Keep empty to log everything.
 
