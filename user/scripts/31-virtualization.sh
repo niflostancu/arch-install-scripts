@@ -2,13 +2,20 @@
 # 
 
 function do_configure() {
-	mkdir -p ~/.vagrant.d/gems/2.5.1
-	gem install --no-user-install --install-dir ~/.vagrant.d/gems/2.5.1 pkg-config
-    vagrant plugin install vagrant-libvirt
-    vagrant plugin install vagrant-winrm
-    vagrant plugin install vagrant-rsync-back
-    vagrant plugin install vagrant-timezone
-	gem install --no-user-install --install-dir ~/.vagrant.d/gems/2.5.1 pkg-config
-    vagrant plugin install vagrant-scp
+    _vagrant_plugin_install vagrant-libvirt
+    _vagrant_plugin_install vagrant-winrm
+    _vagrant_plugin_install vagrant-rsync-back
+    _vagrant_plugin_install vagrant-timezone
+    _vagrant_plugin_install vagrant-scp
+
+    idem_rsync "$SRC_DIR/conf/vagrant.d/" "$HOME/.vagrant.d/"
+}
+
+function _vagrant_plugin_install() {
+    local IS_INSTALLED=
+    vagrant plugin list | grep -w "$1" >/dev/null 2>&1 && IS_INSTALLED=1
+    if [[ -z "$IS_INSTALLED" ]] || [[ -n "$INSTALL_UPGRADE" ]]; then
+        vagrant plugin install "$1"
+    fi
 }
 

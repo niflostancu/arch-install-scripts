@@ -1,9 +1,14 @@
 Vagrant.configure("2") do |config|
   
   config.vm.provider :libvirt do |libvirt|
-    libvirt.storage_pool_name = 'vagrant'
+    # Use QEMU session instead of system connection
+    libvirt.qemu_use_session = true
+    libvirt.uri = 'qemu:///session'
+    libvirt.system_uri = 'qemu:///system'
+    libvirt.storage_pool_name = "vagrant"
+    libvirt.management_network_device = 'virbr0'
   end
-
+  
   if Vagrant.has_plugin?("vagrant-timezone")
     config.timezone.value = :host
   end
