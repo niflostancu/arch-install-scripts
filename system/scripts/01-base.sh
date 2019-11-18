@@ -3,6 +3,8 @@
 # Installs some base packages
 
 function do_install_prerequisites() {
+    # kernel
+    install_pkgs linux-headers
     # Install basic tools, editors etc.
     install_pkgs vim git sudo unison curl rsync openssh avahi nss-mdns bash-completion wget
 }
