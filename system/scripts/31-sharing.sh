@@ -11,9 +11,22 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    systemctl enable nfs-server
-    # systemctl enable samba
+    # systemctl enable nfs-server
+    systemctl enable smb.service nmb.service
+    
+    # Samba config
+    mkdir -p /etc/samba
+    groupadd -rf sambashare
+    if [[ ! -d /var/lib/samba/usershares ]]; then
+        mkdir -p /var/lib/samba/usershares
+        chown root:sambashare /var/lib/samba/usershares
+        # make it sticky
+        chmod 1770 /var/lib/samba/usershares
+    fi
 
-    true
+    if idem_rsync "$SRC_DIR/etc/samba/" /etc/samba/; then
+        systemctl restart smb nmb
+    fi
+
 }
 
