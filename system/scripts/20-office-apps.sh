@@ -6,13 +6,18 @@ function do_install_prerequisites() {
     install_pkgs libreoffice-fresh
 
     # Printers
-    install_pkgs cups cups-pk-helper system-config-printer foomatic-db-engine \
-        foomatic-db foomatic-db-ppds foomatic-db-nonfree-ppds ghostscript \
-        gutenprint gsfonts
+    install_pkgs cups cups-pk-helper system-config-printer ghostscript
+
+    if [[ -n "$INSTALL_PRINTER_DRIVERS" ]]; then
+        install_pkgs foomatic-db-engine gutenprint gsfonts \
+            foomatic-db foomatic-db-ppds foomatic-db-nonfree-ppds ghostscript
+    fi
 
     # Tex Live
-    install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
-        texlive-latexextra
+    if [[ -n "$INSTALL_LATEX" ]]; then
+        install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
+            texlive-latexextra
+    fi
 }
 
 function do_configure() {

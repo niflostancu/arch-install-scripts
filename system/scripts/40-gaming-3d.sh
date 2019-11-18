@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-# Sharing tools: Samba, NFS
+# Gaming tools
+
+if [[ -z "$INSTALL_GAMING" ]]; then return; fi
 
 function do_install_prerequisites() {
     # Drivers

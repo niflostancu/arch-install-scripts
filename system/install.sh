@@ -25,6 +25,8 @@ if [[ -z "$PROFILE" ]]; then
 	exit 1
 fi
 
+source "$SRC_DIR/profiles/$PROFILE/profile.sh"
+
 if [[ -z "$@" ]]; then
 	execute_all "./scripts"
 elif [[ -f "$1" ]]; then
