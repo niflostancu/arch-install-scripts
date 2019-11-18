@@ -11,7 +11,8 @@ function do_install_prerequisites() {
         gutenprint gsfonts
 
     # Tex Live
-    install_pkgs texlive-core texlive-bin texlive-science texlive-pictures
+    install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
+        texlive-latexextra
 }
 
 function do_configure() {
