@@ -9,7 +9,7 @@ function do_configure() {
 
     for file in $KFILES; do
         if ! diff "${DIFFARGS[@]}" "$SRC_DIR/conf/$file" "$XDG_CONFIG_HOME/"; then
-            NEEDS_UPDATE=y
+            # NEEDS_UPDATE=y
             break
         fi
     done

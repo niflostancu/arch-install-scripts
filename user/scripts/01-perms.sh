@@ -1,7 +1,7 @@
 #!/bin/bash
 # adjust groups / permissions
 
-USER_GROUPS=(wheel docker users)
+USER_GROUPS=(wheel docker users sambashare)
 
 function do_configure() {
 	# add the user to some useful groups
