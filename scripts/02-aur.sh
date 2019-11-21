@@ -4,9 +4,7 @@
 
 function do_install_prerequisites() {
     install_pkgs base-devel git
-}
 
-function do_install_secondary() {
     # check if the aurbuild user exists (we use it for building packages)
     BUILD_HOME=/var/aur-build
     if ! id "$BUILD_USER" >/dev/null 2>/dev/null; then

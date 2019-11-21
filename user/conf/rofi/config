@@ -1,9 +1,0 @@
-rofi.theme: ~/.config/rofi/themes/niflo
-
-rofi.modi: combi,ssh,pidgin:~/.config/rofi/scripts/purple
-rofi.combi-modi: drun,run,ssh,pidgin:~/.config/rofi/scripts/purple
-
-rofi.terminal: alacritty
-rofi.run-command: zsh -c '{cmd}'
-rofi.run-shell-command: {terminal} -e {cmd}
-

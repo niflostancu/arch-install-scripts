@@ -32,19 +32,6 @@ function execute_script() {
         show_pkg_warnings
     fi
 
-    if function_exists do_install_secondary; then
-        information "[$NAME] Installing secondary packages..."
-        set +e
-        if ! do_install_secondary; then
-            show_pkg_warnings
-            error "[$NAME] Installation script failed!"
-            set -e
-            return 0
-        fi
-        set -e
-        show_pkg_warnings
-    fi
-
     if function_exists do_configure; then
         information "[$NAME] Configuring the system..."
         set +e
