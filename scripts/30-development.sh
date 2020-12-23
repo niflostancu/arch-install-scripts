@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     # C / C++
-    install_pkgs base-devel gdb valgrind strace ltrace peda pwndbg
+    install_pkgs base-devel gdb valgrind strace ltrace peda pwndbg cgdb
 
     # PHP
     install_pkgs php composer
@@ -21,8 +21,8 @@ function do_install_prerequisites() {
 	install_pkgs python-coverage cython pypy3 python-gobject
 
 	# Python 2
-	install_pkgs python2 python2-pip python2-flake8 python2-pylint python2-pytest python2-virtualenv
-	install_pkgs cython2 pypy
+	install_pkgs python2 python2-pip python2-virtualenv
+	install_pkgs pypy
 
 	# NodeJS
 	install_pkgs nodejs npm yarn

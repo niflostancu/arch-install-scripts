@@ -4,9 +4,9 @@
 
 function do_install_prerequisites() {
     # Bluetooth
-    install_pkgs pulseaudio-bluetooth bluez bluez-libs bluez-utils bluez-firmware
+    install_pkgs pulseaudio-bluetooth bluez bluez-libs bluez-utils
     # IPhone tools
-    install_pkgs ifuse libimobiledevice usbmuxd
+    install_aur_pkgs ifuse libimobiledevice usbmuxd
 }
 
 function do_configure() {

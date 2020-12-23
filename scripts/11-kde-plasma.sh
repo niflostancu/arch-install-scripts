@@ -4,9 +4,9 @@
 
 function do_install_prerequisites() {
     install_pkgs sddm plasma-meta kde-applications-meta plasma-nm \
-        kde-gtk-config packagekit-qt5
+        kde-gtk-config packagekit-qt5 kmenuedit
     # Misc apps
-    install_pkgs rsibreak redshift plasma5-applets-redshift-control 
+    install_pkgs rsibreak redshift 
     install_aur_pkgs diskmonitor plasma5-applets-eventcalendar
 }
 
