@@ -8,7 +8,8 @@ function do_install_prerequisites() {
 
     # Security / VPNs
     install_pkgs networkmanager-pptp networkmanager-openvpn \
-        dnscrypt-proxy wireguard-dkms wireguard-tools
+        dnscrypt-proxy wireguard-dkms wireguard-tools \
+        openconnect networkmanager-openconnect 
 
     # Other network related requisites
     install_pkgs ebtables bridge-utils openbsd-netcat dnsmasq

@@ -12,7 +12,7 @@ function do_install_prerequisites() {
     install_aur_pkgs wine winetricks lutris
 
     # Hybrid graphics
-    install_pkgs bbswitch-dkms vulkan-icd-loader lib32-vulkan-icd-loader
+    install_pkgs bbswitch-dkms vulkan-icd-loader lib32-vulkan-icd-loader vulkan-tools
     install_aur_pkgs nvidia-xrun
     install_pkgs openbox
 }

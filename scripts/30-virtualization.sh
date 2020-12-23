@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Installs virtualization tools
 
@@ -10,13 +9,13 @@ function do_install_prerequisites() {
 
     # Libvirt, Qemu
     if [[ "$INSTALL_QEMU" ]]; then
-        install_pkgs qemu ebtables qemu-arch-extra libvirt virt-manager 
+        install_pkgs qemu ebtables qemu-arch-extra libvirt virt-manager edk2-ovmf
         install_aur_pkgs qemu-user-static-bin binfmt-qemu-static
     fi
 
     if [[ "$INSTALL_VM_TOOLS" ]]; then
         # Vagrant
-        install_pkgs vagrant packer-io debootstrap
+        install_pkgs vagrant packer debootstrap
     fi
     # X11 / VNC tools
     install_pkgs nxagent xpra xorg-xinit xorg-server-xvfb
