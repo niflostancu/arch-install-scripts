@@ -4,7 +4,8 @@
 
 function do_install_prerequisites() {
     # Install basic tools, editors etc.
-    install_pkgs vim git sudo unison curl rsync openssh avahi nss-mdns bash-completion wget
+    install_pkgs vim git sudo unison curl rsync openssh avahi nss-mdns
+        bash-completion wget tree
 }
 
 function do_configure() {

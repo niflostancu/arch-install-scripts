@@ -2,10 +2,11 @@
 #
 # Installs some required drivers / microcode updates
 
-if [[ -z "$INSTALL_DRIVERS" ]]; then return; fi
-
 function do_install_prerequisites() {
     install_pkgs linux-headers
-    install_pkgs intel-ucode
+
+    if [[ -n "$INSTALL_X86_DRIVERS" ]]; then
+        install_pkgs intel-ucode
+    fi
 }
 

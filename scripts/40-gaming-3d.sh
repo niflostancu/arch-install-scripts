@@ -5,8 +5,8 @@
 if [[ -z "$INSTALL_GAMING" ]]; then return; fi
 
 function do_install_prerequisites() {
-    # Drivers
-    install_pkgs nvidia-dkms lib32-nvidia-utils
+    # Libs
+    install_pkgs lib32-nvidia-utils
     # Gaming tools
     install_pkgs steam steam-native-runtime
     install_aur_pkgs wine winetricks lutris
