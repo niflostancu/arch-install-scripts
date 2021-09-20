@@ -23,13 +23,8 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2104", GROUP="user
 ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE="0666", GROUP="users"
 ATTRS{idVendor}=="0403", MODE="0666", GROUP="users"
 
-# STLink v2
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", \
-    MODE:="0660", GROUP:="users", \
-    SYMLINK+="stlinkv2-1_%n"
-SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", \
-    MODE:="0660", GROUP:="users", \
-    SYMLINK+="stlinkv2-1_%n"
+# STMicroelectronics
+ATTRS{idVendor}=="0483", MODE="0666", GROUP="users"
 
 # STM32 DFU
 ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="0666", GROUP="users"
@@ -42,4 +37,7 @@ ATTRS{idVendor}=="1366", MODE="0666", GROUP="users"
 
 # Chinese Logic Analyzer
 ATTRS{idVendor}=="77a1", MODE="0666", GROUP="users"
+
+# USB Test Devices
+ATTRS{idVendor}=="1209", MODE="0666", GROUP="users"
 

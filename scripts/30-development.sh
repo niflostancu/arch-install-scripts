@@ -18,18 +18,18 @@ function do_install_prerequisites() {
 
 	# Python 3
 	install_pkgs python python-pip flake8 python-pylint python-pytest python-virtualenv
-	install_pkgs python-coverage cython pypy3 python-gobject
+	install_pkgs python-coverage cython pypy3 python-gobject pyenv
 
 	# Python 2
 	install_pkgs python2 python2-pip python2-virtualenv
-	install_pkgs pypy
 
 	# NodeJS
 	install_pkgs nodejs npm yarn
 
 	# Embedded / uC
 	install_pkgs minicom cutecom avr-gcc avr-libc avrdude \
-		arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib
+		arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
+		ninja ccache gperf cmake dfu-util
 	install_aur_pkgs openocd
 	# Sigrok for logic analyzers
 	install_pkgs pulseview
