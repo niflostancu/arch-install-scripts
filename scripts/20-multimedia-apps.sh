@@ -6,7 +6,7 @@ function do_install_prerequisites() {
     install_pkgs clementine vlc gstreamer gst-plugins-good \
         gst-plugins-ugly phonon-qt5-gstreamer gst-libav \
         phonon-qt5-vlc lame cdrtools cdrdao dvd+rw-tools k3b digikam \
-        cantata mpd
+        cantata mpd pipewire pipewire-pulse
     # Image manipulation
     install_pkgs gimp imagemagick inkscape dia
     # Music / video editing / conversion

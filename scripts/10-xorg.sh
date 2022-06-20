@@ -5,7 +5,7 @@
 
 function do_install_prerequisites() {
     install_pkgs xorg-server xorg-apps xorg-xrandr xorg-xinput xbindkeys mesa \
-        mesa-demos 
+        mesa-demos xtrlock
     if [[ -n "$INSTALL_NVIDIA_GRAPHICS" ]]; then
         install_pkgs nvidia-dkms libglvnd nvidia-utils nvidia-settings \
             nvidia-prime read-edid
