@@ -18,7 +18,7 @@ function do_install_prerequisites() {
     # Tex Live
     if [[ -n "$INSTALL_LATEX" ]]; then
         install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
-            texlive-latexextra
+            texlive-latexextra texlive-bibtexextra biber tex-gyre-fonts otf-stix
     fi
 }
 
