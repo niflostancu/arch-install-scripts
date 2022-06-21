@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     # C / C++
-    install_pkgs base-devel gdb valgrind strace ltrace peda pwndbg cgdb
+    install_pkgs base-devel gdb valgrind strace ltrace peda pwndbg cgdb bear
 
     # PHP
     install_pkgs php composer
