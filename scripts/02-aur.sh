@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Installs yay package manager
+# Installs ABS tools & yay AUR package manager
 
 function do_install_prerequisites() {
-    install_pkgs base-devel git
+    install_pkgs base-devel git asp
 
     # check if the aurbuild user exists (we use it for building packages)
     BUILD_HOME=/var/aur-build
