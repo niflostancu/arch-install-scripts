@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Installs Office apps, printer drivers etc.
+# Installs Office & EBook apps, printer drivers etc.
 
 function do_install_prerequisites() {
-    install_pkgs libreoffice-fresh
+    install_pkgs libreoffice-fresh calibre
 
     # Printers
     install_pkgs cups cups-pk-helper system-config-printer ghostscript
@@ -20,6 +20,8 @@ function do_install_prerequisites() {
         install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
             texlive-latexextra texlive-bibtexextra biber tex-gyre-fonts otf-stix
     fi
+    # Tectonic XeTeX distribution
+    install_pkgs tectonic
 }
 
 function do_configure() {
