@@ -3,9 +3,11 @@
 # Installs cloud tools
 
 function do_install_prerequisites() {
-    # Google cloud SDK
-    install_aur_pkgs google-cloud-sdk
+    # Prerequisites
+    install_pkgs python-crcmod
     # Kubernetes tools
-    install_aur_pkgs kubectl-bin
+    install_aur_pkgs kubectl k9s
+    # Google cloud SDK
+    install_aur_pkgs google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
 }
 
