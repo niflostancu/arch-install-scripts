@@ -1,4 +1,3 @@
-
 ##############################################
 #                                            #
 #        dnscrypt-proxy configuration        #
@@ -25,7 +24,9 @@
 
 # server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
 
-server_names = ['cloudflare', 'dnscrypt.me', 'ipredator']
+server_names = ['scaleway-ams', 'scaleway-fr', 'techsaviours.org-dnscrypt ', 'ibksturm',
+    'sth-dnscrypt-se-ipv6', 'pryv8boi', 'dnscrypt.be', 'odoh-koki-ams', 'dotya.ml',
+    'meganerd', 'odoh-koki-se']
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
 ## Note: When using systemd socket activation, choose an empty set (i.e. [] ).
@@ -458,3 +459,4 @@ cache_neg_max_ttl = 600
 
   # [static.'google']
   # stamp = 'sdns://AgUAAAAAAAAAAAAOZG5zLmdvb2dsZS5jb20NL2V4cGVyaW1lbnRhbA'
+

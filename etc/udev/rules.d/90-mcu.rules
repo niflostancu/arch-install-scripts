@@ -5,6 +5,8 @@ ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", MODE="0666", GROUP="users"
 ATTRS{idVendor}=="0403", MODE="0666", GROUP="users"
 # QinHeng Electronics CH340 serial converter
 ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE="0666", GROUP="users"
+# PL2303
+ATTRS{idVendor}=="0557", ATTRS{idProduct}=="2008", MODE="0666", GROUP="users"
 
 # USBtinyISP Programmer rules
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="1781", ATTRS{idProduct}=="0c9f", GROUP="users", MODE="0666"
