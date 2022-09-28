@@ -39,6 +39,7 @@ function idem_rsync() {
     done
     # default dest. permissions
     [[ -n "$_RSYNC_CHMOD" ]] || _RSYNC_ARGS+=("--chmod=D775,F664")
+    [[ -z "$DRY_RUN" ]] || _RSYNC_ARGS+=("--dry-run")
 
     _RSYNC_ARGS=("${_RSYNC_ARGS[@]}" --itemize-changes "$@")
     log_debug "rsync ${_RSYNC_ARGS[@]}"
@@ -47,6 +48,7 @@ function idem_rsync() {
     if [[ "$?" -eq 0 ]]; then
         if [ -n "${_OUTPUT}" ]; then
             echo "$_OUTPUT"
+            [[ -z "$DRY_RUN" ]] || return 120
             return 0
         else
             return 120

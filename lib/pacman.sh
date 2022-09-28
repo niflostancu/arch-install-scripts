@@ -38,15 +38,21 @@ function install_pkgs() {
 
     _PKGMAN_WARNINGS+=(${PKGS_404[@]})
     _PKGMAN_EXCLUDED+=(${PKGS_EXCLUDED[@]})
+    if [[ -n "$DRY_RUN" ]]; then
+        echo -n "Packages to install: ${PKGS_TO_INSTALL[@]}"
+        [[ -z "$PKG_AUR" ]] || echo -n "[AUR]"
+        echo
+        return 0
+    fi
     [[ "${#PKGS_TO_INSTALL}" -gt 0 ]] || {
         log_debug "All packages are up to date!"
         return 0
     }
     if [[ -n "$PKG_AUR" ]]; then
-        log_debug "Installing AUR packages: ${PKGS_TO_INSTALL[@]}"
+        log_debug yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
         sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
     else
-        log_debug "Installing pacman packages: ${PKGS_TO_INSTALL[@]}"
+        log_debug pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
         pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
     fi
 }
