@@ -5,7 +5,6 @@
 function do_install_prerequisites() {
     # NFS
     install_pkgs nfs-utils
-
     # Samba
     install_pkgs samba
 }
@@ -24,7 +23,7 @@ function do_configure() {
         chmod 1770 /var/lib/samba/usershares
     fi
 
-    if idem_rsync "$SRC_DIR/etc/samba/" /etc/samba/; then
+    if idem_rsync_conf "samba/" /etc/samba/; then
         systemctl restart smb nmb
     fi
 

@@ -9,22 +9,19 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    systemctl enable sshd.socket
+    systemctl disable sshd.socket || true 
+    systemctl enable sshd.service
     systemctl enable avahi-daemon
 
     # Configure pacman (for multilib)
-    if [[ "$SYSTEM_ARCH" == "amd64" ]]; then
-        if idem_rsync "$SRC_DIR/etc/pacman.conf" /etc/pacman.conf; then
-            pacman --noconfirm -Syu
-        fi
+    if idem_rsync_conf --opt -- "pacman.conf" /etc/pacman.conf; then
+        pacman --noconfirm -Syu
     fi
-
     # Sysctl config
-    if idem_rsync "$SRC_DIR/etc/sysctl.d/" "/etc/sysctl.d/"; then
+    if idem_rsync_conf --all -- "sysctl.d/" /etc/sysctl.d/; then
         touch /etc/sysctl.conf
         sysctl -p
     fi
-
     true
 }
 

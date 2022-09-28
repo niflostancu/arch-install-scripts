@@ -10,7 +10,5 @@ function do_install_prerequisites() {
 function do_configure() {
     # Enable periodic (weekly) SSD TRIM
     systemctl enable fstrim.timer
-
-    true
 }
 

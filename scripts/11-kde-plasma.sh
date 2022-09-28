@@ -1,6 +1,5 @@
 #!/bin/bash
-#
-# Installs KDE & PlasmaShell
+# Desktop environment install script for KDE Plasma
 
 function do_install_prerequisites() {
     install_pkgs sddm plasma-meta kde-applications-meta plasma-nm \
@@ -13,7 +12,8 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    idem_rsync "$SRC_DIR/etc.$PROFILE/sddm.conf" "/etc/sddm.conf"
+    # TODO: generate autologin conf from template
+    # idem_rsync_conf "sddm.conf.d/" "/etc/sddm.conf.d/"
     systemctl enable sddm
 }
 

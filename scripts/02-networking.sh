@@ -8,7 +8,7 @@ function do_install_prerequisites() {
 
     # Security / VPNs
     install_pkgs networkmanager-pptp networkmanager-openvpn \
-        dnscrypt-proxy wireguard-dkms wireguard-tools \
+        dnscrypt-proxy wireguard-tools \
         openconnect networkmanager-openconnect 
 
     # Other network related requisites
@@ -18,27 +18,28 @@ function do_install_prerequisites() {
 function do_configure() {
     systemctl enable NetworkManager
 
-    # Set up dnscrypt
+    # Set up dnscrypt proxy as main DNS
     systemctl enable dnscrypt-proxy.service
     systemctl disable dnscrypt-proxy.socket
-    if idem_rsync "$SRC_DIR/etc/dnscrypt-proxy/" "/etc/dnscrypt-proxy/"; then
+    idem_rsync_conf --all "dnscrypt-proxy/" "/etc/dnscrypt-proxy/"
+    local _EXCODE=$?
+    if [[ "$_EXCODE" -eq 0 ]]; then
         echo "DNSCrypt config installed"
         systemctl stop dnscrypt-proxy.socket
         systemctl restart dnscrypt-proxy.service
     fi
-
     if ! grep -Eq 'nameserver\s+127.0.0.1$' /etc/resolv.conf; then
         echo "Installing dnscrypt as nameserver..."
         sed -i -e '$anameserver 127.0.0.1' -e '/nameserver/d' /etc/resolv.conf
     fi
 
-    if idem_rsync "$SRC_DIR/etc/NetworkManager/" "/etc/NetworkManager/"; then
+    if idem_rsync_conf --all "NetworkManager/" "/etc/NetworkManager/"; then
         echo "NetworkManager config installed"
         systemctl restart NetworkManager
     fi
 
-    idem_rsync "$SRC_DIR/etc/nsswitch.conf" "/etc/nsswitch.conf"
-    idem_rsync "$SRC_DIR/etc/dnsmasq.conf" "/etc/dnsmasq.conf"
+    idem_rsync_conf "nsswitch.conf" "/etc/nsswitch.conf"
+    idem_rsync_conf "dnsmasq.conf" "/etc/dnsmasq.conf"
 
     true
 }

@@ -2,6 +2,8 @@
 #
 # Installs some required drivers / microcode updates
 
+declare -a -g ADD_PLATFORM_PACKAGES
+
 function do_install_prerequisites() {
     install_pkgs linux-headers "${ADD_PLATFORM_PACKAGES[@]}"
 

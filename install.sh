@@ -5,13 +5,7 @@
 set -e
 
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Load libs
 . "$SRC_DIR/lib/utils.sh"
-. "$SRC_DIR/lib/conf-utils.sh"
-. "$SRC_DIR/lib/copy-utils.sh"
-. "$SRC_DIR/lib/pacman.sh"
-. "$SRC_DIR/lib/executor.sh"
 
 if [[ "$EUID" -ne 0 ]]; then
 	echo "Please run as root!"
@@ -26,6 +20,10 @@ if [[ -z "$PROFILE" ]]; then
 fi
 
 source "$SRC_DIR/profiles/$PROFILE/profile.sh"
+
+. "$SRC_DIR/lib/file-utils.sh"
+. "$SRC_DIR/lib/pacman.sh"
+. "$SRC_DIR/lib/executor.sh"
 
 if [[ -z "$@" ]]; then
 	execute_all "./scripts"

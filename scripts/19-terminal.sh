@@ -9,8 +9,8 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    # Change ZSH config path globally to use XDG
-    echo 'ZDOTDIR=$HOME/.config/zsh' > /etc/zsh/zshenv
+    # Change ZSH config path globally to use XDG specification
+    echo 'ZDOTDIR="$HOME/.config/zsh"' > /etc/zsh/zshenv
     # change root's shell
     chsh -s /usr/bin/zsh
 

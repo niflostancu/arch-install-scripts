@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     # C / C++
-    install_pkgs base-devel gdb valgrind strace ltrace peda pwndbg cgdb cmake bear
+    install_pkgs gdb valgrind strace ltrace peda pwndbg cgdb cmake bear
 
     # Tools
     install_pkgs lazygit
@@ -41,10 +41,9 @@ function do_install_prerequisites() {
 # Copy configuration files to /etc 
 function do_configure() {
     # Copy udev rules
-    if idem_rsync "$SRC_DIR/etc/udev/" /etc/udev/; then
+    if idem_rsync_conf "udev/" /etc/udev/; then
         udevadm control --reload-rules && sudo udevadm trigger
     fi
-
     true
 }
 
