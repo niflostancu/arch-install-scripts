@@ -16,15 +16,15 @@ function execute_script() {
     local NAME=$(basename "$1")
     
     echo
-    information "Running script $NAME ..."
+    log_info "Running script $NAME ..."
     source "$1"
     
     if function_exists do_install_prerequisites; then
-        information "[$NAME] Installing prerequisites..."
+        log_info "[$NAME] Installing prerequisites..."
         set +e
         if ! do_install_prerequisites; then
             show_pkg_warnings
-            error "[$NAME] Prerequisites installation failed!"
+            log_error "[$NAME] Prerequisites installation failed!"
             set -e
             return 0
         fi
@@ -33,10 +33,10 @@ function execute_script() {
     fi
 
     if function_exists do_configure; then
-        information "[$NAME] Configuring the system..."
+        log_info "[$NAME] Configuring the system..."
         set +e
         if ! do_configure; then
-            error "[$NAME] Configuration failed!"
+            log_error "[$NAME] Configuration failed!"
             set -e
             return 0
         fi

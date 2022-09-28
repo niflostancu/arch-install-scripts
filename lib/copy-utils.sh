@@ -23,7 +23,7 @@ function idem_rsync() {
             return 2
         fi
     else
-        error "rsync failed: $RSYNC_OUTPUT"
+        log_error "rsync failed: $RSYNC_OUTPUT"
         return 1
     fi
 

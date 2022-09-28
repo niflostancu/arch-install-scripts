@@ -33,10 +33,10 @@ function install_aur_pkgs() {
 
 function show_pkg_warnings() {
     for pkgname in "${PKG_WARNINGS[@]}"; do
-        warning "WARNING: package $pkgname excluded!"
+        log_debug "WARNING: package $pkgname excluded!"
     done
     for pkgname in "${PKG_WARNINGS[@]}"; do
-        warning "WARNING: package $pkgname not found!"
+        log_warn "WARNING: package $pkgname not found!"
     done
     PKG_WARNINGS=()
 }
