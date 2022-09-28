@@ -8,7 +8,7 @@ function do_install_prerequisites() {
     # Printers
     install_pkgs cups cups-pk-helper system-config-printer ghostscript
 
-    install_aur_pkgs ttf-vista-fonts
+    install_pkgs --aur ttf-vista-fonts
 
     if [[ -n "$INSTALL_PRINTER_DRIVERS" ]]; then
         install_pkgs foomatic-db-engine gutenprint gsfonts \

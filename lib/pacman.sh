@@ -3,8 +3,8 @@
 
 # This array will contain the packages that were not found during the install
 # phase
-PKG_WARNINGS=()
-PKG_EXCLUDED=()
+declare -g -a _PKGMAN_WARNINGS=()
+declare -g -a _PKGMAN_EXCLUDED=()
 
 # The unprivileged user used for building AUR packages
 BUILD_USER=aurbuild
@@ -12,31 +12,52 @@ BUILD_USER=aurbuild
 # Installs the specified packages (best-effort, does not fail if one package
 # doesn't exist, just adds to PKG_WARNINGS).
 function install_pkgs() {
-    local -a to_install
-    local -a pkgs_404
-    local -a pkgs_excluded
-    to_install=($(comm -12 <( { pacman -Slq; pacman -Sgq; } | sort -u) <(printf '%s\n' "$@"|sort -u)))
-    pkgs_excluded=($(comm -12 <(printf '%s\n' "$@" | sort -u) <(printf '%s\n' "${EXCLUDE_PACKAGES[@]}"|sort -u)))
-    pkgs_404=($(comm -23 <(printf '%s\n' "$@"|sort -u) <(printf '%s\n' "${to_install[@]}")))
-    to_install=($(comm -23 <(printf '%s\n' "${to_install[@]}" | sort -u) <(printf '%s\n' "${pkgs_404[@]}"|sort -u)))
-    to_install=($(comm -23 <(printf '%s\n' "${to_install[@]}" | sort -u) <(printf '%s\n' "${pkgs_excluded[@]}"|sort -u)))
-    PKG_WARNINGS+=(${pkgs_404[@]})
-    PKG_EXCLUDED+=(${pkgs_excluded[@]})
-    [[ "${#to_install}" -gt 0 ]] || return 0
-    pacman -S --needed --noconfirm "${to_install[@]}"
-}
+    local PKG_AUR=
+    local -a PKGS_TO_INSTALL
+    local -a PKGS_404
+    local -a PKGS_EXCLUDED
+    local -a PACMAN_ARGS=(--noconfirm)
 
-# Installs packages from AUR (uses YaY)
-function install_aur_pkgs() {
-    sudo -u "$BUILD_USER" -- yay -S --needed --noconfirm "$@"
+    while [[ $# -gt 0 ]]; do
+        if [[ "$1" == "--aur" ]]; then
+            PKG_AUR=1
+        else break; fi
+        shift
+    done
+    PKGS_TO_INSTALL=($(comm -12 <( { pacman -Slq; pacman -Sgq; } | sort -u) <(printf '%s\n' "$@"|sort -u)))
+    if [[ -z "$FORCE_REINSTALL" ]]; then
+        PACMAN_ARGS+=("--needed")
+        # exclude already installed packages from the arguments
+        # (to prevent pacman showing warnings)
+        PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(pacman -Qq | sort -u)))
+    fi
+    PKGS_EXCLUDED=($(comm -12 <(printf '%s\n' "$@" | sort -u) <(printf '%s\n' "${EXCLUDE_PACKAGES[@]}"|sort -u)))
+    PKGS_404=($(comm -23 <(printf '%s\n' "$@"|sort -u) <(printf '%s\n' "${PKGS_TO_INSTALL[@]}")))
+    PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_404[@]}"|sort -u)))
+    PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_EXCLUDED[@]}"|sort -u)))
+
+    _PKGMAN_WARNINGS+=(${PKGS_404[@]})
+    _PKGMAN_EXCLUDED+=(${PKGS_EXCLUDED[@]})
+    [[ "${#PKGS_TO_INSTALL}" -gt 0 ]] || {
+        log_debug "All packages are up to date!"
+        return 0
+    }
+    if [[ -n "$PKG_AUR" ]]; then
+        log_debug "Installing AUR packages: ${PKGS_TO_INSTALL[@]}"
+        sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
+    else
+        log_debug "Installing pacman packages: ${PKGS_TO_INSTALL[@]}"
+        pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
+    fi
 }
 
 function show_pkg_warnings() {
-    for pkgname in "${PKG_WARNINGS[@]}"; do
-        log_debug "WARNING: package $pkgname excluded!"
-    done
-    for pkgname in "${PKG_WARNINGS[@]}"; do
+    if [[ "${#PKGMAN_EXCLUDED[@]}" -gt 0 ]]; then
+        log_debug "WARNING: packages excluded: ${PKGMAN_EXCLUDED[@]}!"
+    fi
+    for pkgname in "${PKGMAN_WARNINGS[@]}"; do
         log_warn "WARNING: package $pkgname not found!"
     done
-    PKG_WARNINGS=()
+    PKGMAN_WARNINGS=()
+    PKGMAN_EXCLUDED=()
 }
