@@ -4,7 +4,7 @@
 function do_install_prerequisites() {
     # Docker
     if [[ -n "$INSTALL_DOCKER" ]]; then
-        install_pkgs docker docker-compose
+        install_pkgs docker docker-buildx docker-compose
     fi
 
     # Libvirt, Qemu

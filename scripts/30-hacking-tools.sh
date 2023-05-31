@@ -12,7 +12,7 @@ function do_install_prerequisites() {
         termshark
 
     # System monitoring
-    install_pkgs htop iotop powertop
+    install_pkgs htop iotop powertop pacutils
 
     # Crypto / forensics
     install_pkgs ophcrack john hashcat foremost testdisk easy-rsa \

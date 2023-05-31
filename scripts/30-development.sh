@@ -3,6 +3,9 @@
 # Installs various hacker / developer tools
 
 function do_install_prerequisites() {
+    # Shell scripting
+    install_pkgs checkbashisms dash
+
     # C / C++
     install_pkgs gdb valgrind strace ltrace peda pwndbg cgdb cmake bear
 
@@ -36,6 +39,9 @@ function do_install_prerequisites() {
 
     # Sigrok for logic analyzers
     install_pkgs pulseview sigrok-cli
+
+    # Documentation tools
+    install_pkgs ghostwriter
 }
 
 # Copy configuration files to /etc 
