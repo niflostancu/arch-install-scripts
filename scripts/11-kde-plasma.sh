@@ -3,7 +3,7 @@
 
 function do_install_prerequisites() {
     install_pkgs sddm plasma-meta kde-applications-meta plasma-nm \
-        kde-gtk-config packagekit-qt5 kmenuedit
+        kde-gtk-config packagekit-qt5 kmenuedit xsettingsd
     # wayland!
     install_pkgs plasma-wayland-session egl-wayland wl-clipboard
     # Misc apps
