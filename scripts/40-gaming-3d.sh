@@ -6,7 +6,7 @@ if [[ -z "$INSTALL_GAMING" ]]; then return; fi
 
 function do_install_prerequisites() {
     # Libs
-    install_pkgs lib32-nvidia-utils lib32-pipewire
+    install_pkgs lib32-pipewire
     # Gaming tools
     install_pkgs steam steam-native-runtime
     install_pkgs wine winetricks lutris
