@@ -22,12 +22,9 @@ function do_install_prerequisites() {
     install_pkgs maven scala gradle
     install_pkgs jdk-openjdk
 
-    # Python 3
+    # Python (3 only)
     install_pkgs python python-pip flake8 python-pylint python-pytest python-virtualenv
-    install_pkgs python-coverage cython pypy3 python-gobject pyenv
-
-    # Python 2
-    install_pkgs python2 python2-pip python2-virtualenv
+    install_pkgs python-pipx python-coverage cython pypy3 python-gobject pyenv
 
     # NodeJS
     install_pkgs nodejs npm yarn
