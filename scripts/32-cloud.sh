@@ -8,6 +8,6 @@ function do_install_prerequisites() {
     # Kubernetes tools
     install_pkgs kubectl k9s
     # Google Cloud SDK
-    install_pkgs --aur google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+    install_pkgs --aur google-cloud-cli google-cloud-cli-gke-gcloud-auth-plugin
 }
 
