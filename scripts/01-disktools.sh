@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     install_pkgs gptfdisk dosfstools ntfs-3g smartmontools mtools \
-        btrfs-progs
+        btrfs-progs nvme-cli
 }
 
 function do_configure() {
