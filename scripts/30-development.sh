@@ -29,13 +29,16 @@ function do_install_prerequisites() {
     # NodeJS
     install_pkgs nodejs npm yarn
 
+    # Kernel compilation deps
+    install_pkgs xmlto kmod inetutils bc libelf git cpio perl tar xz
+
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \
         arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
         ninja ccache gperf dfu-util
 
-    # Sigrok for logic analyzers
-    install_pkgs pulseview sigrok-cli
+    # Sigrok for logic analyzers (using custom %-git for now)
+    # install_pkgs pulseview sigrok-cli
 
     # Documentation tools
     install_pkgs ghostwriter

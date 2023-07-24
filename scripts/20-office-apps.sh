@@ -25,7 +25,7 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    sudo systemctl enable org.cups.cupsd.service
-    sudo systemctl start org.cups.cupsd.service || true
+    sudo systemctl enable cups
+    sudo systemctl start cups || true
 }
 
