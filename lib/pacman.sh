@@ -39,6 +39,7 @@ function install_pkgs() {
     _PKGMAN_WARNINGS+=(${PKGS_404[@]})
     _PKGMAN_EXCLUDED+=(${PKGS_EXCLUDED[@]})
     if [[ -n "$DRY_RUN" ]]; then
+        [[ ${#PKGS_TO_INSTALL[@]} -gt 0 ]] || return 0
         echo -n "Packages to install: ${PKGS_TO_INSTALL[@]}"
         [[ -z "$PKG_AUR" ]] || echo -n "[AUR]"
         echo
