@@ -1,0 +1,29 @@
+pkgname=libpurple-signald
+pkgver=0.10.0
+pkgrel=1
+pkgdesc='Pidgin libpurple bridge to signald.'
+url='https://github.com/hoehermann/libpurple-signald'
+license=('GPL3')
+arch=('any')
+depends=('json-glib' 'libpurple' 'signald' 'qrencode' 'cmake')
+source=("git+https://github.com/hoehermann/purple-signald.git")
+sha256sums=('SKIP')
+
+build() {
+  cd "${srcdir}/purple-signald"
+  git submodule update --init
+  mkdir -p build && cd build
+  cmake ..
+  make all
+}
+
+package() {
+  cd "${srcdir}/purple-signald/build"
+  make DESTDIR="$pkgdir/" install
+  #install -Dm644 libsignald.so "${pkgdir}/usr/lib/purple-2/libsignald.so"
+  #install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  #install -Dm644 icons/16/signal.png "${pkgdir}/usr/share/pixmaps/pidgin/protocols/16/signal.png"
+  #install -Dm644 icons/48/signal.png "${pkgdir}/usr/share/pixmaps/pidgin/protocols/48/signal.png"
+
+}
+
