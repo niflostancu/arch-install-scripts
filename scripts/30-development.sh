@@ -47,7 +47,7 @@ function do_install_prerequisites() {
 # Copy configuration files to /etc 
 function do_configure() {
     # Copy udev rules
-    if idem_rsync_conf "udev/" /etc/udev/; then
+    if idem_rsync_conf --all "udev/" /etc/udev/; then
         udevadm control --reload-rules && sudo udevadm trigger
     fi
     true
