@@ -29,8 +29,8 @@ function do_install_prerequisites() {
     # NodeJS
     install_pkgs nodejs npm yarn
 
-    # Kernel compilation deps
-    install_pkgs xmlto kmod inetutils bc libelf git cpio perl tar xz
+    # Compilation deps (arch devtools, Linux kernels etc.)
+    install_pkgs devtools xmlto kmod inetutils bc libelf git cpio perl tar xz
 
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \
