@@ -12,7 +12,7 @@ function do_install_prerequisites() {
         openconnect networkmanager-openconnect 
 
     # Other network related requisites
-    install_pkgs ebtables bridge-utils openbsd-netcat dnsmasq
+    install_pkgs bridge-utils openbsd-netcat dnsmasq
 }
 
 function do_configure() {
