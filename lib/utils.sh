@@ -51,7 +51,7 @@ function cecho() {
 }
 
 function log_debug() {
-    [[ -n "$DEBUG" ]] || return 0
+    [[ -n "$DEBUG" && "$DEBUG" -gt 0 ]] || return 0
     cecho -c 'gray' "$@"
 }
 function log_info() { cecho -c 'blue' "$@"; }

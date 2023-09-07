@@ -24,8 +24,11 @@ function install_pkgs() {
         else break; fi
         shift
     done
-    PKGS_TO_INSTALL=($(comm -12 <( { pacman -Slq; pacman -Sgq; } | sort -u) <(printf '%s\n' "$@"|sort -u)))
-    if [[ -z "$FORCE_REINSTALL" ]]; then
+    PKGS_TO_INSTALL=("$@")
+    if [[ -z "$PKG_AUR" ]]; then
+        PKGS_TO_INSTALL=($(comm -12 <( { pacman -Slq; pacman -Sgq; } | sort -u) <(printf '%s\n' "$@"|sort -u)))
+    fi
+    if [[ -z "$FORCE_REINSTALL" && -z "$PKG_AUR" ]]; then
         PACMAN_ARGS+=("--needed")
         # exclude already installed packages from the arguments
         # (to prevent pacman showing warnings)
@@ -33,6 +36,7 @@ function install_pkgs() {
     fi
     PKGS_EXCLUDED=($(comm -12 <(printf '%s\n' "$@" | sort -u) <(printf '%s\n' "${EXCLUDE_PACKAGES[@]}"|sort -u)))
     PKGS_404=($(comm -23 <(printf '%s\n' "$@"|sort -u) <(printf '%s\n' "${PKGS_TO_INSTALL[@]}")))
+    log_debug "install_pkgs: [${PKGS_TO_INSTALL[@]}]; NOT_FOUND=[${PKGS_404[@]}]; EXCLUDE=[${PKGS_EXCLUDED[@]}]!"
     PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_404[@]}"|sort -u)))
     PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_EXCLUDED[@]}"|sort -u)))
 
@@ -46,7 +50,6 @@ function install_pkgs() {
         return 0
     fi
     [[ "${#PKGS_TO_INSTALL}" -gt 0 ]] || {
-        log_debug "All packages are up to date!"
         return 0
     }
     if [[ -n "$PKG_AUR" ]]; then
