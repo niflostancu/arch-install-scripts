@@ -9,8 +9,8 @@ function do_install_prerequisites() {
     # C / C++
     install_pkgs gdb valgrind strace ltrace peda pwndbg cgdb cmake bear
 
-    # Tools
-    install_pkgs lazygit
+    # Versioning Tools
+    install_pkgs git lazygit github-cli
 
     # PHP
     install_pkgs php composer
@@ -30,7 +30,7 @@ function do_install_prerequisites() {
     install_pkgs nodejs npm yarn
 
     # Compilation deps (arch devtools, Linux kernels etc.)
-    install_pkgs devtools xmlto kmod inetutils bc libelf git cpio perl tar xz
+    install_pkgs devtools xmlto kmod inetutils bc libelf cpio perl tar xz
 
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \

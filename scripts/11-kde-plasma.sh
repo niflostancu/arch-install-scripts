@@ -2,8 +2,8 @@
 # Desktop environment install script for KDE Plasma
 
 function do_install_prerequisites() {
-    install_pkgs sddm plasma-meta kde-applications-meta plasma-nm \
-        kde-gtk-config packagekit-qt5 kmenuedit xsettingsd
+    install_pkgs sddm plasma-meta plasma-nm kde-gtk-config packagekit-qt5 kmenuedit xsettingsd
+    install_pkgs kde-graphics-meta kde-multimedia-meta kde-network-meta kde-system-meta kde-utilities-meta
     # wayland!
     install_pkgs plasma-wayland-session egl-wayland wl-clipboard
     # Misc apps
