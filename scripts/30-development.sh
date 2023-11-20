@@ -7,7 +7,7 @@ function do_install_prerequisites() {
     install_pkgs checkbashisms dash
 
     # C / C++
-    install_pkgs gdb valgrind strace ltrace peda pwndbg cgdb cmake bear
+    install_pkgs gdb valgrind strace ltrace peda cgdb cmake bear
 
     # Versioning Tools
     install_pkgs git lazygit github-cli

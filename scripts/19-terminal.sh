@@ -6,6 +6,7 @@ function do_install_prerequisites() {
     install_pkgs zsh tmux neovim python-pynvim powerline-fonts xsel \
         the_silver_searcher minicom ruby fzf python-virtualenvwrapper xdotool \
         ctags alacritty
+    install_pkgs neofetch
 }
 
 function do_configure() {
