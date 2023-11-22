@@ -3,6 +3,8 @@
 # Installs various hacker / developer tools
 
 function do_install_prerequisites() {
+    # Password Management
+    install_pkgs keepassxc
     # File formats / utilities
     install_pkgs zip unzip p7zip sqlite
 

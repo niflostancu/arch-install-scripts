@@ -9,7 +9,7 @@ function do_install_prerequisites() {
     # install_pkgs --aur signald libpurple-signald purple-gowhatsapp-git
 
     # Email clients
-    install_pkgs thunderbird notmuch msmtp neomutt astroid offlineimap afew
+    install_pkgs notmuch msmtp neomutt astroid offlineimap afew
     install_pkgs --aur lieer-git muchsync mailctl-bin
 }
 

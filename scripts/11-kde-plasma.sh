@@ -7,7 +7,7 @@ function do_install_prerequisites() {
     # wayland!
     install_pkgs plasma-wayland-session egl-wayland wl-clipboard
     # Misc apps
-    install_pkgs rsibreak redshift 
+    install_pkgs rsibreak redshift kwin-bismuth
     install_pkgs --aur diskmonitor plasma5-applets-eventcalendar
 }
 
