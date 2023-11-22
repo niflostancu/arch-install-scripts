@@ -35,13 +35,13 @@ function do_install_prerequisites() {
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \
         arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
-        ninja ccache gperf dfu-util
+        ninja ccache gperf dfu-util clang
 
     # Sigrok for logic analyzers (using custom %-git for now)
     # install_pkgs pulseview sigrok-cli
 
-    # Documentation tools
-    install_pkgs ghostwriter
+    # Documentation / tools
+    install_pkgs man-pages man-db ghostwriter
 }
 
 # Copy configuration files to /etc 

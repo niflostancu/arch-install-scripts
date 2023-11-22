@@ -5,6 +5,7 @@
 function do_install_prerequisites() {
     # Password Management
     install_pkgs keepassxc
+
     # File formats / utilities
     install_pkgs zip unzip p7zip sqlite
 
@@ -18,7 +19,7 @@ function do_install_prerequisites() {
         termshark
 
     # System monitoring
-    install_pkgs htop iotop powertop pacutils glances
+    install_pkgs htop iotop powertop pacutils glances neofetch
 
     # Crypto / forensics
     install_pkgs ophcrack john hashcat foremost testdisk easy-rsa \
