@@ -10,6 +10,6 @@ function do_install_prerequisites() {
 
     # Email clients
     install_pkgs notmuch msmtp neomutt astroid offlineimap afew
-    install_pkgs --aur lieer-git muchsync mailctl-bin
+    install_pkgs --aur python-installer lieer-git muchsync mailctl-bin
 }
 
