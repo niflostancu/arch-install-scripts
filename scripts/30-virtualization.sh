@@ -9,8 +9,10 @@ function do_install_prerequisites() {
 
     # Libvirt, Qemu
     if [[ -n "$INSTALL_QEMU" ]]; then
-        install_pkgs qemu qemu-arch-extra qemu-user-static \
+        install_pkgs qemu-base qemu-desktop qemu-user-static qemu-user-static-binfmt \
+            qemu-system-arm qemu-system-aarch65 \
             libvirt virt-manager edk2-ovmf
+        # install_pkgs qemu-emulators-full
     fi
 
     if [[ -n "$INSTALL_VM_TOOLS" ]]; then
