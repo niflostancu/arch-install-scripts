@@ -19,7 +19,7 @@ function do_install_prerequisites() {
         termshark ldns bind
 
     # System monitoring
-    install_pkgs htop iotop powertop pacutils glances neofetch
+    install_pkgs htop iotop powertop pacutils glances fastfetch
 
     # Crypto / forensics
     install_pkgs ophcrack john hashcat foremost testdisk easy-rsa \
