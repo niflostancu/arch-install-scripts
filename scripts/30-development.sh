@@ -7,7 +7,7 @@ function do_install_prerequisites() {
     install_pkgs checkbashisms dash
 
     # C / C++
-    install_pkgs gdb valgrind strace ltrace peda cgdb cmake bear
+    install_pkgs gdb cmake ninja ccache clang valgrind strace ltrace cgdb bear
 
     # Versioning Tools
     install_pkgs git lazygit github-cli
@@ -35,11 +35,10 @@ function do_install_prerequisites() {
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \
         arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
-        ninja ccache gperf dfu-util clang
+        gperf dfu-util platformio-core platformio-core-udev
 
-    # Sigrok for logic analyzers (using custom %-git for now)
-    # install_pkgs pulseview sigrok-cli
-
+    # Sigrok + Pulseview for logic analyzers
+    install_pkgs pulseview sigrok-cli
 }
 
 # Copy configuration files to /etc 
