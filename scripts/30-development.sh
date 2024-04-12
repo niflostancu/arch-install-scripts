@@ -40,8 +40,6 @@ function do_install_prerequisites() {
     # Sigrok for logic analyzers (using custom %-git for now)
     # install_pkgs pulseview sigrok-cli
 
-    # Documentation / tools
-    install_pkgs man-pages man-db ghostwriter
 }
 
 # Copy configuration files to /etc 

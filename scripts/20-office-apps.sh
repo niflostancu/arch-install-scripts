@@ -22,6 +22,9 @@ function do_install_prerequisites() {
     fi
     # Tectonic XeTeX distribution
     install_pkgs tectonic
+
+    # Documentation / tools
+    install_pkgs man-pages man-db asciinema ghostwriter
 }
 
 function do_configure() {
