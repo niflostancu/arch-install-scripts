@@ -17,14 +17,16 @@ function do_install_prerequisites() {
 
     # Tex Live
     if [[ -n "$INSTALL_LATEX" ]]; then
-        install_pkgs texlive-core texlive-bin texlive-science texlive-pictures \
-            texlive-latexextra texlive-bibtexextra biber tex-gyre-fonts otf-stix
+        install_pkgs texlive-core texlive-bin texlive-binextra texlive-science \
+            texlive-xetex texlive-pictures texlive-latexextra texlive-bibtexextra \
+            texlive-langeuropean \
+            biber tex-gyre-fonts otf-stix
     fi
     # Tectonic XeTeX distribution
-    install_pkgs tectonic
+    install_pkgs tectonic texlive-fontutils
 
     # Documentation / tools
-    install_pkgs man-pages man-db asciinema ghostwriter
+    install_pkgs man-pages man-db asciinema ghostwriter glow
 }
 
 function do_configure() {
