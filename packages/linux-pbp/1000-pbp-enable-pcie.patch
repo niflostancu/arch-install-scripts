@@ -1,0 +1,22 @@
+diff --git i/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts w/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+index b3c985dd32a3..fb5b24b7af4f 100644
+--- i/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ w/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -796,7 +796,7 @@ &io_domains {
+ };
+ 
+ &pcie_phy {
+-	//status = "okay";
++	status = "okay";
+ };
+ 
+ &pcie0 {
+@@ -808,7 +808,7 @@ &pcie0 {
+ 	vpcie0v9-supply = <&vcca0v9_s3>;
+ 	vpcie1v8-supply = <&vcca1v8_s3>;
+ 	vpcie3v3-supply = <&vcc3v3_ssd>;
+-	//status = "okay";
++	status = "okay";
+ };
+ 
+ &pinctrl {
