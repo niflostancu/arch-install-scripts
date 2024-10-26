@@ -9,7 +9,6 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    systemctl disable sshd.socket || true 
     systemctl enable sshd.service
     systemctl enable avahi-daemon
 

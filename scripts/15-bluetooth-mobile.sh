@@ -6,7 +6,8 @@ function do_install_prerequisites() {
     # Bluetooth
     install_pkgs bluez bluez-libs bluez-utils
     # IPhone tools
-    install_pkgs ifuse libimobiledevice usbmuxd
+    #install_pkgs libimobiledevice usbmuxd
+    install_pkgs --aur libimobiledevice-git libplist-git libimobiledevice-glue-git usbmuxd-git ifuse
 }
 
 function do_configure() {
