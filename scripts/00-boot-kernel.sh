@@ -1,6 +1,5 @@
 #!/bin/bash
-#
-# Installs some required drivers / microcode updates
+# Kernel/boot-related packages & configs
 
 declare -a -g ADD_PLATFORM_PACKAGES
 
