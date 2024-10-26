@@ -5,6 +5,9 @@ function do_install_prerequisites() {
     install_pkgs sddm plasma-meta plasma-nm kde-gtk-config packagekit-qt5 kmenuedit xsettingsd
     install_pkgs kde-multimedia-meta kde-network-meta kde-system-meta kde-utilities-meta \
         kimageformats5 power-profiles-daemon kwallet-pam
+    install_pkgs ffmpegthumbs juk dragon audiocd-kio kamoso plasmatube
+    install_pkgs colord-kde kamera gwenview kdegraphics-thumbnailers kcolorchooser \
+        kolourpaint skanlite spectacle okular kruler
     # wayland!
     install_pkgs plasma-wayland-session egl-wayland wl-clipboard
     # Misc apps
