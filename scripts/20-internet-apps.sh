@@ -12,7 +12,8 @@ function do_install_prerequisites() {
     install_pkgs --aur slack-desktop
 
     # Email clients
-    install_pkgs notmuch msmtp neomutt astroid offlineimap afew
+    install_pkgs notmuch msmtp neomutt astroid protonmail-bridge-core offlineimap afew
+    install_pkgs --aur dodo-mail-git
     install_pkgs --aur python-installer lieer-git muchsync mailctl-bin
 }
 
