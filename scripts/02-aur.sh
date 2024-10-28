@@ -14,21 +14,24 @@ function do_install_prerequisites() {
         chown "$BUILD_USER":"$BUILD_USER" "$BUILD_HOME"
     fi
     echo "$BUILD_USER ALL= (root) NOPASSWD: /usr/bin/pacman " > /etc/sudoers.d/$BUILD_USER
+    usermod -aG disk "$BUILD_USER"
 
-    if command -v yay >/dev/null 2>&1; then
+    if command -v yay >/dev/null 2>&1 && [[ -z "$FORCE_REINSTALL" ]]; then
         echo "YaY (package manager) already installed! skipping..."
         return 0
     fi
 
+    rm -rf /tmp/yay-install
     sudo -u "$BUILD_USER" -- mkdir -p /tmp/yay-install
-    pushd /tmp/yay-install
-    echo "Retrieving yay ..."
-    sudo -u "$BUILD_USER" -- git clone https://aur.archlinux.org/yay.git
-    cd yay
-    echo "Installing yay ..."
-    sudo -u "$BUILD_USER" -- makepkg -si --noconfirm
-    echo "Done!"
-    popd
+    (
+        cd /tmp/yay-install
+        echo "Retrieving yay ..."
+        sudo -u "$BUILD_USER" -- git clone https://aur.archlinux.org/yay.git
+        cd yay
+        echo "Installing yay ..."
+        sudo -u "$BUILD_USER" -- makepkg -si --noconfirm
+        echo "Done!"
+    )
     rm -rf /tmp/yay-install
 
     true
