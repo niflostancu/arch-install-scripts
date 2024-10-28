@@ -13,8 +13,10 @@ function do_configure() {
     systemctl enable avahi-daemon
 
     # Configure pacman (for multilib)
-    if idem_rsync_conf --opt -- "pacman.conf" /etc/pacman.conf; then
-        pacman --noconfirm -Syu
+    if [[ -n "$INSTALL_PACMAN_CONF" ]]; then
+        if idem_rsync_conf --opt -- "$INSTALL_PACMAN_CONF" /etc/pacman.conf; then
+            pacman --noconfirm -Syu
+        fi
     fi
     # Sysctl config
     if idem_rsync_conf --all -- "sysctl.d/" /etc/sysctl.d/; then
