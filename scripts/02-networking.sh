@@ -41,6 +41,14 @@ function do_configure() {
     idem_rsync_conf "nsswitch.conf" "/etc/nsswitch.conf"
     idem_rsync_conf "dnsmasq.conf" "/etc/dnsmasq.conf"
 
+    # group used for the no-internet filter rules
+    [ $(getent group no-internet) ] || groupadd -g 9991 no-internet
+
+    systemctl enable nftables.service
+    if idem_rsync_conf "nftables.conf" "/etc/nftables.conf"; then
+        systemctl restart nftables.service
+    fi
+
     true
 }
 
