@@ -10,7 +10,8 @@ function do_install_prerequisites() {
     install_pkgs gdb cmake ninja ccache clang valgrind strace ltrace cgdb bear
 
     # Versioning Tools
-    install_pkgs git lazygit github-cli
+    # LibGit2 required by some nvim plugins (fugit2)
+    install_pkgs git lazygit github-cli libgit2
 
     # PHP
     install_pkgs php composer
