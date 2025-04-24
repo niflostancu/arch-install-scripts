@@ -4,7 +4,8 @@
 
 function do_install_prerequisites() {
     # NM / MM
-    install_pkgs networkmanager modemmanager mobile-broadband-provider-info
+    install_pkgs networkmanager modemmanager mobile-broadband-provider-info \
+        wireless-regdb
 
     # Security / VPNs
     install_pkgs networkmanager-pptp networkmanager-openvpn \

@@ -10,8 +10,10 @@ function do_install_prerequisites() {
         kolourpaint skanlite spectacle okular kruler
     # wayland!
     install_pkgs plasma-wayland-session egl-wayland wl-clipboard
+    # QT5 Plasma Integration
+    install_pkgs plasma5-integration kwayland5 oxygen5
     # Misc apps
-    install_pkgs rsibreak redshift kwin-bismuth
+    install_pkgs rsibreak redshift
 }
 
 function do_configure() {

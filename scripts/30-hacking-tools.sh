@@ -10,7 +10,7 @@ function do_install_prerequisites() {
     install_pkgs zip unzip p7zip sqlite unrar
 
     # Reverse engineering
-    install_pkgs radare2 iaito r2ghidra
+    install_pkgs radare2 iaito r2ghidra binsider
     # install_pkgs ghidra
 
     # Network tools
