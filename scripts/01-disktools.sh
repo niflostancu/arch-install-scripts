@@ -4,7 +4,7 @@
 
 function do_install_prerequisites() {
     install_pkgs gptfdisk dosfstools ntfs-3g smartmontools mtools \
-        btrfs-progs nvme-cli
+        btrfs-progs nvme-cli exfatprogs
 }
 
 function do_configure() {
