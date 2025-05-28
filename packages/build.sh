@@ -66,13 +66,13 @@ EOF
 function build_arch_package() {
     (
         cd "$SRC_DIR/$1"
-        log_info "Building $1"
+        sh_log_info "Building $1"
         if [[ -f build.conf.sh ]]; then
-            log_debug loading build.conf.sh
+            sh_log_debug loading build.conf.sh
             source build.conf.sh
         fi
         build_config
-        log_debug makepkg "${MAKEPKG_ARGS[@]}"
+        sh_log_debug makepkg "${MAKEPKG_ARGS[@]}"
         makepkg "${MAKEPKG_ARGS[@]}"
     )
 }

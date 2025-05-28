@@ -36,7 +36,7 @@ function install_pkgs() {
     fi
     PKGS_EXCLUDED=($(comm -12 <(printf '%s\n' "$@" | sort -u) <(printf '%s\n' "${EXCLUDE_PACKAGES[@]}"|sort -u)))
     PKGS_404=($(comm -23 <(printf '%s\n' "$@"|sort -u) <(printf '%s\n' "${PKGS_TO_INSTALL[@]}")))
-    log_debug "install_pkgs: [${PKGS_TO_INSTALL[@]}]; NOT_FOUND=[${PKGS_404[@]}]; EXCLUDE=[${PKGS_EXCLUDED[@]}]!"
+    sh_log_debug "install_pkgs: [${PKGS_TO_INSTALL[@]}]; NOT_FOUND=[${PKGS_404[@]}]; EXCLUDE=[${PKGS_EXCLUDED[@]}]!"
     PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_404[@]}"|sort -u)))
     PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_EXCLUDED[@]}"|sort -u)))
 
@@ -53,20 +53,20 @@ function install_pkgs() {
         return 0
     }
     if [[ -n "$PKG_AUR" ]]; then
-        log_debug yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
+        sh_log_debug yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
         sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
     else
-        log_debug pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
+        sh_log_debug pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
         pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
     fi
 }
 
 function show_pkg_warnings() {
     if [[ "${#PKGMAN_EXCLUDED[@]}" -gt 0 ]]; then
-        log_debug "WARNING: packages excluded: ${PKGMAN_EXCLUDED[@]}!"
+        sh_log_debug "DBG: packages excluded: ${PKGMAN_EXCLUDED[@]}!"
     fi
     for pkgname in "${PKGMAN_WARNINGS[@]}"; do
-        log_warn "WARNING: package $pkgname not found!"
+        sh_log_error "WARNING: package $pkgname not found!"
     done
     PKGMAN_WARNINGS=()
     PKGMAN_EXCLUDED=()

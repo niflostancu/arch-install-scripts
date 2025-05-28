@@ -4,8 +4,9 @@
 
 set -e
 
-SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-. "$SRC_DIR/lib/utils.sh"
+set -eo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/lib/base.sh"
+SRC_DIR=$(sh_get_script_path)
 
 # parse command line arguments
 _print_help() {
@@ -51,9 +52,9 @@ fi
 
 source "$SRC_DIR/profiles/$PROFILE/profile.sh"
 
-. "$SRC_DIR/lib/file-utils.sh"
-. "$SRC_DIR/lib/pacman.sh"
-. "$SRC_DIR/lib/executor.sh"
+@import "file-utils"
+@import "pacman"
+@import "executor"
 
 if [[ -z "$@" ]]; then
     execute_all "./scripts"

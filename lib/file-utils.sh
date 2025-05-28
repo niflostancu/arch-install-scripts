@@ -42,7 +42,7 @@ function idem_rsync() {
     [[ -z "$DRY_RUN" ]] || _RSYNC_ARGS+=("--dry-run")
 
     _RSYNC_ARGS=("${_RSYNC_ARGS[@]}" --itemize-changes "$@")
-    log_debug "rsync ${_RSYNC_ARGS[@]}"
+    sh_log_debug "rsync ${_RSYNC_ARGS[@]}"
     local _OUTPUT=
     _OUTPUT=$(rsync "${_RSYNC_ARGS[@]}")
     if [[ "$?" -eq 0 ]]; then
@@ -54,7 +54,7 @@ function idem_rsync() {
             return 120
         fi
     else
-        log_error "rsync failed: $_OUTPUT"
+        sh_log_error "rsync failed: $_OUTPUT"
         return 1
     fi
 }
@@ -98,7 +98,7 @@ function idem_rsync_conf() {
         return
     fi
     if [[ -z "$_OPTIONAL" ]]; then
-        log_error "Configuration file not found: '$_CONF_SRC'"
+        sh_log_error "Configuration file not found: '$_CONF_SRC'"
         return 1
     fi
     return 120
