@@ -62,7 +62,7 @@ function sh_cecho() {
 	COLOR="${ESC}${COLOR}m"
 	[[ -n "$TERM_COLORS" ]] || { COLOR=''; ESC=''; RST=''; }
 	# finally, compose the message
-	echo "${EARGS[@]}" "${COLOR}$*${RST}";
+	( IFS=" "; echo "${EARGS[@]}" "${COLOR}$*${RST}" )
 }
 # and some aliases:
 function sh_color_echo() { sh_cecho "$@"; }
@@ -77,8 +77,8 @@ SH_COLOR_PRINT_MAP+=([debug]="cyan" [info]="b-green" [err]="b-red" [emerg]="b-re
 function sh_log() {
 	local LEVEL="$1"; shift
 	[[ ! -v "SH_LOG_ALIASES[$LEVEL]" ]] || LEVEL="${SH_LOG_ALIASES[$LEVEL]}"
-	sh_hooks_run "sh_log_cb" "$LEVEL" "$*"
-	sh_cecho "$LEVEL" "${SH_LOG_PREFIX:+"$SH_LOG_PREFIX: "}$*"
+	sh_hooks_run "sh_log_cb" "$LEVEL" "$@"
+	( IFS=" "; sh_cecho "$LEVEL" "${SH_LOG_PREFIX:+"$SH_LOG_PREFIX: "}$*" )
 }
 
 # only logs if the DEBUG variable is non-null
