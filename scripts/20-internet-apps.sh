@@ -21,6 +21,6 @@ function _install_caprine() {
     if check_pkg_installed caprine && [[ -z "$FORCE_REINSTALL" ]]; then
         return 0
     fi
-    build_custom_pkg -i caprine
+    build_custom_pkg -i --noconfirm caprine
 }
 

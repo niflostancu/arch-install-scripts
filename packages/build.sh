@@ -12,8 +12,10 @@ _print_help() {
     echo "Syntax: $0 [options...] [PACKAGE_DIR]"
     echo "Options:"
     echo "   --force|-f: forces rebuilding the package"
-    echo "   --cleanbuild|-C: forces a clean build"
+    echo "   --cleanbuild|-C: runs a clean build"
+    echo "   --distclean: removes cache directory for package"
     echo "   --install|-i: installs the package after successful build"
+    echo "   --noconfirm: do not confirm when installing package"
     exit 1
 }
 
@@ -34,6 +36,8 @@ while [[ $# -gt 0 ]]; do
             MAKEPKG_ARGS+=(--cleanbuild) ;;
         --install|-i)
             MAKEPKG_ARGS+=(--install) ;;
+        --noconfirm)
+            MAKEPKG_ARGS+=(--noconfirm) ;;
         -*)
             sh_log_error "Invalid argument: $1" >&2
             _print_help ;;
