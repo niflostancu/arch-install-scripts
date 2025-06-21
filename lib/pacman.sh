@@ -131,3 +131,8 @@ function show_pkg_warnings() {
     _PKGMAN_WARNINGS=()
     _PKGMAN_EXCLUDED=()
 }
+
+function run_as_builduser() {
+    sudo -u "$BUILD_USER" -- "$@"
+}
+

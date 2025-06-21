@@ -22,14 +22,14 @@ function do_install_prerequisites() {
     fi
 
     rm -rf /tmp/yay-install
-    sudo -u "$BUILD_USER" -- mkdir -p /tmp/yay-install
+    run_as_builduser mkdir -p /tmp/yay-install
     (
         cd /tmp/yay-install
         echo "Retrieving yay ..."
-        sudo -u "$BUILD_USER" -- git clone https://aur.archlinux.org/yay.git
+        run_as_builduser git clone https://aur.archlinux.org/yay.git
         cd yay
         echo "Installing yay ..."
-        sudo -u "$BUILD_USER" -- makepkg -si --noconfirm
+        run_as_builduser makepkg -si --noconfirm
         echo "Done!"
     )
     rm -rf /tmp/yay-install
