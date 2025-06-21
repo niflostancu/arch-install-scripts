@@ -2,14 +2,15 @@
 # Desktop environment install script for KDE Plasma
 
 function do_install_prerequisites() {
-    install_pkgs sddm plasma-meta plasma-nm kde-gtk-config kmenuedit xsettingsd
+    install_pkgs sddm plasma-meta plasma-nm kde-gtk-config kmenuedit xsettingsd \
+        greetd greetd-tuigreet
     install_pkgs kde-multimedia-meta kde-network-meta kde-system-meta kde-utilities-meta \
         power-profiles-daemon kwallet-pam
     install_pkgs ffmpegthumbs juk dragon audiocd-kio kamoso plasmatube
     install_pkgs colord-kde kamera gwenview kdegraphics-thumbnailers kcolorchooser \
         kolourpaint skanlite spectacle okular kruler
-    # wayland!
-    install_pkgs plasma-wayland-session egl-wayland wl-clipboard
+    # wayland utils
+    install_pkgs egl-wayland wl-clipboard
     # QT5 Plasma Integration
     install_pkgs plasma5-integration kwayland5 oxygen5
     # Misc apps
@@ -17,8 +18,14 @@ function do_install_prerequisites() {
 }
 
 function do_configure() {
-    # TODO: generate autologin conf from template
-    # idem_rsync_conf "sddm.conf.d/" "/etc/sddm.conf.d/"
-    systemctl enable sddm
+    if [[ "$USE_LOGIN_MANAGER" == "sddm" ]]; then
+        systemctl disable greetd
+        systemctl enable sddm
+    elif [[ "$USE_LOGIN_MANAGER" == "greetd" ]]; then
+        mkdir -p /etc/greetd
+        idem_rsync_conf "greetd/" "/etc/greetd/"
+        systemctl disable sddm
+        systemctl enable greetd
+    fi
 }
 
