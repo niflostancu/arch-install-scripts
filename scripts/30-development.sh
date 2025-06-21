@@ -39,8 +39,11 @@ function do_install_prerequisites() {
         gperf dfu-util platformio-core platformio-core-udev
 
     # Sigrok + Pulseview for logic analyzers
-    # install_pkgs pulseview sigrok-cli
-    install_pkgs --aur libsigrokdecode-git libsigrok-git pulseview-git
+    #install_pkgs pulseview sigrok-cli
+    install_pkgs --aur libsigrokdecode-git libsigrok-git 
+    if ! check_pkg_installed pulseview-git || [[ -n "$FORCE_REINSTALL" ]]; then
+        build_custom_pkg -i --noconfirm pulseview-git
+    fi
 }
 
 # Copy configuration files to /etc 
