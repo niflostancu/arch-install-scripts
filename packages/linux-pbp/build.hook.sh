@@ -10,4 +10,5 @@ MAKEFLAGS="-j$NPROC ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-"
 export CROSS_COMPILE=aarch64-linux-gnu-
 
 EOF
+build_config
 
