@@ -16,10 +16,10 @@ function do_install_prerequisites() {
     fi
 
     if [[ -n "$INSTALL_VM_TOOLS" ]]; then
-        install_pkgs vagrant packer debootstrap
+        install_pkgs packer debootstrap
     fi
     # X11 / VNC tools
-    install_pkgs nxagent xpra xorg-xinit xorg-server-xvfb
+    install_pkgs xpra xorg-xinit xorg-server-xvfb
 }
 
 function do_configure() {

@@ -3,7 +3,7 @@
 # Installs ABS tools & yay AUR package manager
 
 function do_install_prerequisites() {
-    install_pkgs base-devel git asp pkgfile expac
+    install_pkgs base-devel git pkgfile expac
 
     # check if the aurbuild user exists (we use it for building packages)
     BUILD_HOME=/var/aur-build

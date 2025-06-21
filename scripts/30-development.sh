@@ -20,11 +20,11 @@ function do_install_prerequisites() {
     install_pkgs go go-tools
 
     # Java
-    install_pkgs maven scala gradle
+    install_pkgs maven gradle
     install_pkgs jdk-openjdk
 
     # Python (3 only)
-    install_pkgs python python-pip flake8 python-pylint python-pytest python-virtualenv
+    install_pkgs python python-pip python-pylint python-pytest python-virtualenv
     install_pkgs python-pipx python-coverage cython pypy3 python-gobject pyenv
 
     # NodeJS
@@ -39,7 +39,8 @@ function do_install_prerequisites() {
         gperf dfu-util platformio-core platformio-core-udev
 
     # Sigrok + Pulseview for logic analyzers
-    install_pkgs pulseview sigrok-cli
+    # install_pkgs pulseview sigrok-cli
+    install_pkgs --aur libsigrokdecode-git libsigrok-git pulseview-git
 }
 
 # Copy configuration files to /etc 

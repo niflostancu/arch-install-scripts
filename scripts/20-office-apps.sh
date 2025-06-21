@@ -7,8 +7,6 @@ function do_install_prerequisites() {
 
     # Printers
     install_pkgs cups cups-pk-helper system-config-printer ghostscript
-    # Windows Fonts (I have licence!)
-    install_pkgs --aur ttf-ms-win11-auto
 
     if [[ -n "$INSTALL_PRINTER_DRIVERS" ]]; then
         install_pkgs foomatic-db-engine gutenprint gsfonts \
