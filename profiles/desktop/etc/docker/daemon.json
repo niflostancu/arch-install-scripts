@@ -1,0 +1,6 @@
+{
+  "features":{"buildkit": true},
+  "data-root": "/media/xtra/var/docker",
+  "insecure-registries" : ["10.4.0.11:5000", "10.4.0.1:5000"]
+}
+

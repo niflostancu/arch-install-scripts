@@ -26,11 +26,10 @@ function do_configure() {
     if [[ -n "$INSTALL_DOCKER" ]]; then
         systemctl enable docker
         # Move docker containers from rootfs
-        mkdir -p /etc/systemd/system/docker.service.d/
-        # if idem_rsync_conf "systemd/system/docker.service.d/" /etc/systemd/system/docker.service.d/; then
-        #     systemctl daemon-reload
-        #     systemctl restart docker
-        # fi
+        mkdir -p /etc/docker
+        if idem_rsync_conf "docker/" "/etc/docker/"; then
+            systemctl restart docker
+        fi
     fi
     if [[ -n "$INSTALL_VM_TOOLS" ]]; then
         systemctl enable libvirtd
