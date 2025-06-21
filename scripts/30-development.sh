@@ -34,9 +34,19 @@ function do_install_prerequisites() {
     install_pkgs devtools xmlto kmod inetutils bc libelf cpio perl tar xz
 
     # Embedded / uC
-    install_pkgs minicom picocom avr-gcc avr-libc avrdude openocd \
+    install_pkgs minicom picocom avr-gcc avr-libc avrdude \
         arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
         gperf dfu-util platformio-core platformio-core-udev
+
+    # install openocd from git (since latest is old as fsck)
+    install_pkgs --aur openocd-git
+    # ofc we need to patch jimtcl first...
+    if ! check_pkg_installed jimtcl || [[ -n "$FORCE_REINSTALL" ]]; then
+        build_custom_pkg -i --noconfirm jimtcl
+    fi
+    if ! check_pkg_installed openocd-git || [[ -n "$FORCE_REINSTALL" ]]; then
+        build_custom_pkg -i --noconfirm openocd-git
+    fi
 
     # Sigrok + Pulseview for logic analyzers
     #install_pkgs pulseview sigrok-cli

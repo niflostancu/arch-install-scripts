@@ -78,7 +78,7 @@ function build_arch_package() {
         if [[ -n "$DIST_CLEAN" && -d "$PKG_BUILD_DEST" ]]; then
             rm -rf "$PKG_BUILD_DEST"
         fi
-        if [[ ! -f "$PKG_SOURCE/PKGBUILD" ]]; then
+        if [[ ! -f "$PKG_SOURCE/PKGBUILD" && ! -f "$PKG_BUILD_DEST/PKGBUILD" ]]; then
             sh_log_info "Downloading $1 src:"
             download_arch_pkg "$1"
         fi
@@ -90,10 +90,10 @@ function build_arch_package() {
         shopt -s nullglob
         for pfile in PKGBUILD*.patch; do
 	        if ! patch -R -p1 -s -f --dry-run < "$pfile"; then
-		        sh_log_info "Applied patch: $pfile"
+		        sh_log_info "Applying patch: $pfile"
 		        patch -p1 < "$pfile"
 		    else
-		        sh_log_debug "Ignored patch: $pfile"
+		        sh_log_debug "Ignored patch (already applied): $pfile"
 	        fi
         done
 
