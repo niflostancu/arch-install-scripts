@@ -12,62 +12,122 @@ BUILD_USER=aurbuild
 # Installs the specified packages (best-effort, does not fail if one package
 # doesn't exist, just adds to PKG_WARNINGS).
 function install_pkgs() {
-    local PKG_AUR=
-    local -a PKGS_TO_INSTALL
-    local -a PKGS_404
-    local -a PKGS_EXCLUDED
+    local ENABLE_AUR=
+    local -a PKGS_REPO PKGS_REPO_FILTERED PKGS_NOTFOUND PKGS_EXCLUDED PKGS_AUR
     local -a PACMAN_ARGS=(--noconfirm)
 
     while [[ $# -gt 0 ]]; do
         if [[ "$1" == "--aur" ]]; then
-            PKG_AUR=1
+            ENABLE_AUR=1
         else break; fi
         shift
     done
-    PKGS_TO_INSTALL=("$@")
-    if [[ -z "$PKG_AUR" ]]; then
-        PKGS_TO_INSTALL=($(comm -12 <( { pacman -Slq; pacman -Sgq; } | sort -u) <(printf '%s\n' "$@"|sort -u)))
+    # remove globally-excluded packages
+    mapfile -t PKGS_EXCLUDED < <(pkgs_array_sorted "${EXCLUDE_PACKAGES[@]}" | pkg_list_filter --same "${@}")
+    mapfile -t PKGS_REPO < <(pkgs_array_sorted "${EXCLUDE_PACKAGES[@]}" | pkg_list_filter "${@}")
+    if [[ -n "$ENABLE_AUR" ]]; then
+        # split out AUR-only packages (to be installed separately using yay)
+        mapfile -t PKGS_AUR < <(yay -Sqla|sort -u | \
+            pkg_list_filter --same "${PKGS_REPO[@]}")
+        mapfile -t PKGS_REPO < <(pkgs_array_sorted "${PKGS_AUR[@]}" | \
+            pkg_list_filter "${PKGS_REPO[@]}")
     fi
-    if [[ -z "$FORCE_REINSTALL" && -z "$PKG_AUR" ]]; then
+    # extract only packages found inside synced repos
+    mapfile -t PKGS_REPO_FILTERED < <(pacman_query -Sqlg | \
+        pkg_list_filter --same "${PKGS_REPO[@]}")
+    mapfile -t PKGS_NOTFOUND < <(pkgs_array_sorted "${PKGS_REPO_FILTERED[@]}" | \
+        pkg_list_filter "${PKGS_REPO[@]}")
+
+    # only filter out already present AUR packages if reinstall was not forced
+    if [[ -z "$FORCE_REINSTALL" ]]; then
         PACMAN_ARGS+=("--needed")
         # exclude already installed packages from the arguments
         # (to prevent pacman showing warnings)
-        PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(pacman -Qq | sort -u)))
+        mapfile -t PKGS_REPO_FILTERED < <(pacman_query -Qq | pkg_list_filter "${PKGS_REPO_FILTERED[@]}")
+        if [[ ${#PKGS_AUR[@]} -gt 0 ]]; then
+            # also filter out already installed AUR packages (marked as foreign by pacman)
+            mapfile -t PKGS_AUR < <(pacman_query -Qmq | pkg_list_filter "${PKGS_AUR[@]}")
+        fi
     fi
-    PKGS_EXCLUDED=($(comm -12 <(printf '%s\n' "$@" | sort -u) <(printf '%s\n' "${EXCLUDE_PACKAGES[@]}"|sort -u)))
-    PKGS_404=($(comm -23 <(printf '%s\n' "$@"|sort -u) <(printf '%s\n' "${PKGS_TO_INSTALL[@]}")))
-    sh_log_debug "install_pkgs: [${PKGS_TO_INSTALL[@]}]; NOT_FOUND=[${PKGS_404[@]}]; EXCLUDE=[${PKGS_EXCLUDED[@]}]!"
-    PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_404[@]}"|sort -u)))
-    PKGS_TO_INSTALL=($(comm -23 <(printf '%s\n' "${PKGS_TO_INSTALL[@]}" | sort -u) <(printf '%s\n' "${PKGS_EXCLUDED[@]}"|sort -u)))
 
-    _PKGMAN_WARNINGS+=(${PKGS_404[@]})
-    _PKGMAN_EXCLUDED+=(${PKGS_EXCLUDED[@]})
-    if [[ -n "$DRY_RUN" ]]; then
-        [[ ${#PKGS_TO_INSTALL[@]} -gt 0 ]] || return 0
-        echo -n "Packages to install: ${PKGS_TO_INSTALL[@]}"
-        [[ -z "$PKG_AUR" ]] || echo -n "[AUR]"
-        echo
-        return 0
+    sh_log_debug "install_pkgs [$(pkgs_array_inline "$@")];" \
+        "repo=[$(pkgs_array_inline "${PKGS_REPO_FILTERED[@]}")];" \
+        "aur=[$(pkgs_array_inline "${PKGS_AUR[@]}")];" \
+        "NOT_FOUND=[$(pkgs_array_inline "${PKGS_NOTFOUND[@]}")]"
+
+    _PKGMAN_WARNINGS+=("${PKGS_NOTFOUND[@]}")
+    _PKGMAN_EXCLUDED+=("${PKGS_EXCLUDED[@]}")
+    if [[ "${#PKGS_REPO_FILTERED}" -gt 0 ]]; then
+        sh_log_debug pacman -S "${PACMAN_ARGS[@]}" "${PKGS_REPO_FILTERED[@]}"
+        if [[ -n "$DRY_RUN" ]]; then
+            sh_log_info "Install pkgs: $(pkgs_array_inline "${PKGS_REPO_FILTERED[@]}")"
+        else
+            pacman -S "${PACMAN_ARGS[@]}" "${PKGS_REPO_FILTERED[@]}"
+        fi
     fi
-    [[ "${#PKGS_TO_INSTALL}" -gt 0 ]] || {
-        return 0
-    }
-    if [[ -n "$PKG_AUR" ]]; then
-        sh_log_debug yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
-        sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
-    else
-        sh_log_debug pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
-        pacman -S "${PACMAN_ARGS[@]}" "${PKGS_TO_INSTALL[@]}"
+    if [[ "${#PKGS_AUR[@]}" -gt 0 ]]; then
+        sh_log_debug sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
+        if [[ -n "$DRY_RUN" ]]; then
+            sh_log_info "Install pkgs [AUR]: $(pkgs_array_inline "${PKGS_AUR[@]}")"
+        else
+            sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
+        fi
     fi
 }
 
+function check_pkg_installed() {
+    pacman -q -Qi "$@" &>/dev/null
+}
+
+function pacman_query() {
+    local PAC_ARGS=()
+    local _QUERY_LIST='' _QUERY_GROUPS=''
+    while [[ $# -gt 0 ]]; do
+        if [[ "$1" == --* ]]; then PAC_ARGS+=("$1")
+        elif [[ "$1" =~ ^-[a-zA-Z]* ]]; then
+            local ARG="$1"
+            if [[ "$1" == *l* ]]; then ARG="${ARG//l/}"; _QUERY_LIST=1; fi
+            if [[ "$1" == *g* ]]; then ARG="${ARG//g/}"; _QUERY_GROUPS=1; fi
+            [[ "$ARG" == '-' ]] || PAC_ARGS+=("$ARG")
+        else break; fi; shift
+    done
+    {
+        if [[ -n "$_QUERY_LIST" ]]; then pacman "${PAC_ARGS[@]}" -l; fi
+        if [[ -n "$_QUERY_GROUPS" ]]; then pacman "${PAC_ARGS[@]}" -g; fi
+        if [[ -z "$_QUERY_LIST" && -z "$_QUERY_GROUPS" ]]; then pacman "${PAC_ARGS[@]}"; fi
+    } | sort -u | awk NF
+}
+
+function pkgs_array_sorted() {
+    printf '%s\n' "$@" | sort -u | awk NF
+}
+
+function pkgs_array_inline() {
+    local TMP=""
+    printf -v TMP '%s ' "$@"
+    echo -n "${TMP%?}"
+}
+
+function pkg_list_filter() {
+    local -a COMM_ARGS=()
+    while [[ $# -gt 0 ]]; do
+        if [[ "$1" == "--same" ]]; then
+            COMM_ARGS+=(-12)
+        elif [[ "$1" == -* ]]; then
+            sh_log_error "pkg_list_filter: invalid argument: $1"; return 1
+        else break; fi; shift
+    done
+    [[ -n "${COMM_ARGS[*]}" ]] || COMM_ARGS=("-23")
+    comm "${COMM_ARGS[@]}" <(printf '%s\n' "$@" | sort -u | awk NF) "-" | awk NF
+}
+
 function show_pkg_warnings() {
-    if [[ "${#PKGMAN_EXCLUDED[@]}" -gt 0 ]]; then
-        sh_log_debug "DBG: packages excluded: ${PKGMAN_EXCLUDED[@]}!"
+    if [[ "${#_PKGMAN_EXCLUDED[@]}" -gt 0 ]]; then
+        sh_log_info "NOTICE: Packages excluded:" "${_PKGMAN_EXCLUDED[@]}"
     fi
-    for pkgname in "${PKGMAN_WARNINGS[@]}"; do
+    for pkgname in "${_PKGMAN_WARNINGS[@]}"; do
         sh_log_error "WARNING: package $pkgname not found!"
     done
-    PKGMAN_WARNINGS=()
-    PKGMAN_EXCLUDED=()
+    _PKGMAN_WARNINGS=()
+    _PKGMAN_EXCLUDED=()
 }
