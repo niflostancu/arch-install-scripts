@@ -17,6 +17,8 @@ function do_install_prerequisites() {
 
     if [[ -n "$INSTALL_VM_TOOLS" ]]; then
         install_pkgs packer debootstrap
+        # workaround for CachyOS reporting multiple host architectures
+        echo "x86_64" > /usr/share/debootstrap/arch
     fi
     # X11 / VNC tools
     install_pkgs xpra xorg-xinit xorg-server-xvfb
