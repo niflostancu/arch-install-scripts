@@ -18,7 +18,8 @@ function do_install_prerequisites() {
         dsniff tcpdump arp-scan lftp tftp-hpa termshark ldns bind
 
     # System monitoring
-    install_pkgs htop iotop powertop pacutils glances fastfetch
+    install_pkgs htop iotop powertop pacutils glances fastfetch btop
+    install_pkgs --aur y-cruncher
 
     # Crypto / forensics
     install_pkgs john hashcat foremost testdisk easy-rsa strace
