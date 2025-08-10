@@ -31,7 +31,8 @@ function do_install_prerequisites() {
     install_pkgs nodejs npm yarn
 
     # Compilation deps (arch devtools, Linux kernels etc.)
-    install_pkgs devtools xmlto kmod inetutils bc libelf cpio perl tar xz
+    install_pkgs devtools xmlto kmod inetutils bc libelf cpio perl tar xz \
+        repo
 
     # Embedded / uC
     install_pkgs minicom picocom avr-gcc avr-libc avrdude \
@@ -50,7 +51,7 @@ function do_install_prerequisites() {
 
     # Sigrok + Pulseview for logic analyzers
     #install_pkgs pulseview sigrok-cli
-    install_pkgs --aur libsigrokdecode-git libsigrok-git 
+    install_pkgs --aur libsigrokdecode-git libsigrok-git sigrok-cli-git
     if ! check_pkg_installed pulseview-git || [[ -n "$FORCE_REINSTALL" ]]; then
         build_custom_pkg -i --noconfirm pulseview-git
     fi
