@@ -22,6 +22,8 @@ function do_install_prerequisites() {
     fi
     # Tectonic XeTeX distribution
     install_pkgs tectonic texlive-fontutils
+    # Typst - new modern LaTeX-inspired language
+    install_pkgs typst
 
     # Documentation / tools
     install_pkgs man-pages man-db asciinema ghostwriter glow
