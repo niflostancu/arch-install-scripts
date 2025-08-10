@@ -2,8 +2,8 @@
 # Desktop environment install script for KDE Plasma
 
 function do_install_prerequisites() {
-    install_pkgs sddm plasma-meta plasma-nm kde-gtk-config kmenuedit xsettingsd \
-        greetd greetd-tuigreet
+    install_pkgs sddm plasma-meta plasma-nm nm-connection-editor kde-gtk-config \
+        kmenuedit xsettingsd greetd greetd-tuigreet
     install_pkgs kde-multimedia-meta kde-network-meta kde-system-meta kde-utilities-meta \
         power-profiles-daemon kwallet-pam
     install_pkgs ffmpegthumbs juk dragon audiocd-kio kamoso plasmatube
