@@ -5,9 +5,12 @@
 function do_install_prerequisites() {
     # Shell scripting
     install_pkgs checkbashisms dash
+    # Arch Wiki Docs
+    install_pkgs arch-wiki-lite
 
     # C / C++
-    install_pkgs gdb cmake ninja ccache clang valgrind strace ltrace cgdb bear
+    install_pkgs gdb cmake ninja ccache clang valgrind strace ltrace cgdb bear \
+        perf
 
     # Versioning Tools
     # LibGit2 required by some nvim plugins (fugit2)
