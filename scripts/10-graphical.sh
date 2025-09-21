@@ -25,5 +25,9 @@ function do_install_prerequisites() {
     if [[ -n "$INSTALL_INTEL_GRAPHICS" ]]; then
         install_pkgs xf86-video-intel
     fi
+    if [[ -n "$INSTALL_AMD_GRAPHICS" ]]; then
+        # required for sensors monitoring
+        install_pkgs rocm-smi-lib
+    fi
 }
 
