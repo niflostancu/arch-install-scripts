@@ -23,6 +23,10 @@ function do_configure() {
         touch /etc/sysctl.conf
         sysctl -p
     fi
+    # Systemd config
+    if idem_rsync_conf --all -- "systemd/" /etc/systemd/; then
+        systemctl daemon-reload
+    fi
     true
 }
 
