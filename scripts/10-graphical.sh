@@ -27,7 +27,7 @@ function do_install_prerequisites() {
     fi
     if [[ -n "$INSTALL_AMD_GRAPHICS" ]]; then
         # required for sensors monitoring
-        install_pkgs rocm-smi-lib
+        install_pkgs rocm-smi-lib vulkan-radeon lib32-vulkan-radeon
     fi
 }
 
