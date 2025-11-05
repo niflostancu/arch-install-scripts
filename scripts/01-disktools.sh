@@ -6,6 +6,8 @@ function do_install_prerequisites() {
     install_pkgs gptfdisk parted ntfs-3g smartmontools mtools \
         dosfstools xfsprogs btrfs-progs exfatprogs nvme-cli \
         lvm2 cryptsetup
+    # misc for advanced
+    install_pkgs rng-tools
 }
 
 function do_configure() {
