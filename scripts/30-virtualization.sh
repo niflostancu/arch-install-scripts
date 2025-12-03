@@ -11,7 +11,7 @@ function do_install_prerequisites() {
     if [[ -n "$INSTALL_QEMU" ]]; then
         install_pkgs qemu-base qemu-desktop qemu-user-static qemu-user-static-binfmt \
             qemu-system-arm qemu-system-aarch64 libvirt virt-manager virt-viewer \
-            edk2-ovmf
+            edk2-ovmf passt cloud-utils
         # install_pkgs qemu-emulators-full
     fi
 
