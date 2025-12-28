@@ -66,6 +66,9 @@ function do_configure() {
     if idem_rsync_conf --all "udev/" /etc/udev/; then
         udevadm control --reload-rules && sudo udevadm trigger
     fi
+    # copy PHP extensions
+    idem_rsync_conf --all "php/" /etc/php/
+
     true
 }
 
