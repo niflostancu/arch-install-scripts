@@ -28,10 +28,10 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
-server_names = ['scaleway-ams', 'scaleway-fr', 'techsaviours.org-dnscrypt ', 'ibksturm',
-    'sth-dnscrypt-se-ipv6', 'pryv8boi', 'dnscrypt.be', 'odoh-koki-ams', 'dotya.ml',
-    'meganerd', 'odoh-koki-se']
-
+# server_names = ['scaleway-ams', 'scaleway-fr', 'techsaviours.org-dnscrypt ', 'ibksturm',
+#     'sth-dnscrypt-se-ipv6', 'pryv8boi', 'dnscrypt.be', 'odoh-koki-ams', 'dotya.ml',
+#     'meganerd', 'odoh-koki-se']
+#
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
 ## Example with both IPv4 and IPv6:
@@ -77,7 +77,7 @@ odoh_servers = true
 ## Require servers defined by remote sources to satisfy specific properties
 
 # Server must support DNS security extensions (DNSSEC)
-require_dnssec = false
+require_dnssec = true
 
 # Server must not log user queries (declarative)
 require_nolog = true
