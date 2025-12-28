@@ -67,11 +67,14 @@ function install_pkgs() {
         fi
     fi
     if [[ "${#PKGS_AUR[@]}" -gt 0 ]]; then
-        sh_log_debug sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
+        sh_log_debug yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
         if [[ -n "$DRY_RUN" ]]; then
             sh_log_info "Install pkgs [AUR]: $(pkgs_array_inline "${PKGS_AUR[@]}")"
         else
-            sudo -u "$BUILD_USER" -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
+            PACMAN_ARGS+=("${PACMAN_ARGS[@]}" --answerclean=None --answerdiff=None 
+                --answeredit=None --answerupgrade=None)
+            PACMAN_ARGS=("${PACMAN_ARGS[@]/--noconfirm}")
+            sudo -u "$BUILD_USER" -- sh -c 'yes | $@' -- yay -S "${PACMAN_ARGS[@]}" "${PKGS_AUR[@]}"
         fi
     fi
 }
