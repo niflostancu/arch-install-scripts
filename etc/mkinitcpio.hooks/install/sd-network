@@ -1,0 +1,36 @@
+#!/bin/bash
+# From (greatly simplified):
+# https://raw.githubusercontent.com/wolegis/mkinitcpio-systemd-extras
+
+build() {
+    add_systemd_unit systemd-networkd.service
+
+    # enable systemd-networkd.service
+    add_symlink /etc/systemd/system/sysinit.target.wants/systemd-networkd.service \
+                /usr/lib/systemd/system/systemd-networkd.service
+
+    if [[ -n "$SD_NETWORKD_CONFIG" ]]; then
+        add_file "$SD_NETWORKD_CONFIG" "/etc/systemd/networkd.conf" 444 || return $?
+    fi
+
+    if [[ -d "$SD_NETWORK_FILES" ]]; then
+        while IFS= read -r -d '' file; do
+            add_file "$file" "/etc/systemd/network/$(basename "$file")" 444 || return $?
+            msg "sd-network: add $file"
+        done < <(find "$SD_NETWORK_FILES" -mindepth 1 -maxdepth 1 -type f -print0)
+    fi
+
+    add_checked_modules /drivers/net
+
+    # systemd-networkd.service requires user systemd-network
+    grep '^systemd-network:' /etc/passwd >>"$BUILDROOT/etc/passwd"
+    grep '^systemd-network:' /etc/shadow >>"$BUILDROOT/etc/shadow"
+    grep '^systemd-network:' /etc/group >>"$BUILDROOT/etc/group"
+}
+
+help() {
+    cat <<__EOF_HELP__
+This hook allows initial network setup within a systemd based initramfs.
+__EOF_HELP__
+}
+

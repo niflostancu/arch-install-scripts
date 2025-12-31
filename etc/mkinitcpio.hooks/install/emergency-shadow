@@ -3,7 +3,7 @@
 
 build() {
   if [[ -f /etc/shadow.initramfs ]]; then
-    echo "shadowcopy: Using /etc/shadow.initramfs"
+    msg "shadowcopy: Using /etc/shadow.initramfs"
     add_file /etc/shadow.initramfs /etc/shadow
   fi
 }

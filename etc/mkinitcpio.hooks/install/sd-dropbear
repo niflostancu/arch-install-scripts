@@ -1,0 +1,95 @@
+#!/bin/bash
+# From (customized):
+# https://raw.githubusercontent.com/wolegis/mkinitcpio-systemd-extras
+
+build() {
+    if ! pacman -Qi dropbear >/dev/null 2>&1; then
+        error "Package dropbear not installed"
+        return 1
+    fi
+    if [[ ! -x "$BUILDROOT/usr/bin/busybox" ]]; then
+        add_binary /usr/lib/initcpio/busybox /usr/bin/busybox
+        local applet
+        for applet in $(/usr/lib/initcpio/busybox --list); do
+            add_symlink "/usr/bin/$applet" busybox
+        done
+    fi
+
+    add_binary dropbear
+
+    local socket_unit=(
+        "[Unit]"
+        "Description=Dropbear SSH server socket"
+        "Documentation=https://man.archlinux.org/man/dropbear.8"
+        "Requires=systemd-networkd.service"
+        "After=systemd-networkd.service"
+        "DefaultDependencies=no"
+        ""
+        "[Socket]"
+        "ListenStream=%i"
+        "Accept=true"
+        "CollectMode=inactive-or-failed"
+        "KeepAlive=true"
+        "IPTOS=low-delay"
+        ""
+        "[Install]"
+        "WantedBy=sysinit.target"
+    )
+    printf "%s\n" "${socket_unit[@]}" > "$BUILDROOT/usr/lib/systemd/system/dropbear@.socket"
+
+    local service_unit=(
+        "[Unit]"
+        "Description=Dropbear SSH server (socket activated)"
+        "Documentation=https://man.archlinux.org/man/dropbear.8"
+        "DefaultDependencies=no"
+        ""
+        "[Service]"
+        "Type=exec"
+        "ExecStart=/usr/bin/dropbear ${SD_DROPBEAR_COMMAND:+-c '${SD_DROPBEAR_COMMAND}' }-i -s -j -k"
+        "StandardInput=socket"
+        "StandardOutput=socket"
+    )
+    printf "%s\n" "${service_unit[@]}" > "$BUILDROOT/usr/lib/systemd/system/dropbear@.service"
+
+    # enable dropbeard listening on TCP port $SD_DROPBEAR_PORT (if set to legal port number)
+    SD_DROPBEAR_PORT=${SD_DROPBEAR_PORT:-22}
+    add_symlink /etc/systemd/system/sysinit.target.wants/dropbear@$SD_DROPBEAR_PORT.socket /usr/lib/systemd/system/dropbear@.socket
+    msg "dropbear: using port $SD_DROPBEAR_PORT"
+
+    local host_key_file_count=0
+    for key_type in dss rsa ecdsa ed25519; do
+        if [[ -r "/etc/dropbear/dropbear_${key_type}_host_key" ]]; then
+            add_file "/etc/dropbear/dropbear_${key_type}_host_key"
+            (( host_key_file_count++ ))
+        fi
+    done
+    if [[ "$host_key_file_count" == "0" ]]; then
+        for key_type in rsa ecdsa ed25519; do
+            if [[ -r "/etc/ssh/ssh_host_${key_type}_key" ]]; then
+                mkdir -p "$BUILDROOT/etc/dropbear"
+                dropbearconvert openssh dropbear "/etc/ssh/ssh_host_${key_type}_key" "$BUILDROOT/etc/dropbear/dropbear_${key_type}_host_key" 2> /dev/null
+                (( host_key_file_count++ ))
+            fi
+        done
+    fi
+    if [[ "$host_key_file_count" == "0" ]]; then
+        error "Missing SSH host keys"
+        return 1
+    fi
+
+    SD_DROPBEAR_AUTHORIZED_KEYS=${SD_DROPBEAR_AUTHORIZED_KEYS:-/root/.ssh/authorized_keys}
+    if [[ -r "$SD_DROPBEAR_AUTHORIZED_KEYS" ]]; then
+        add_file "$SD_DROPBEAR_AUTHORIZED_KEYS" /root/.ssh/authorized_keys 600
+        chmod 700 "$BUILDROOT/root/.ssh"
+    else
+        error "Keys file '$SD_DROPBEAR_AUTHORIZED_KEYS' does not exist (or not readable)"
+        return 1
+    fi
+}
+
+help() {
+    cat <<__EOF_HELP__
+This hook enables dropbear SSH server within a systemd based initramfs.
+__EOF_HELP__
+}
+
