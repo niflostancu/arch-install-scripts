@@ -6,7 +6,7 @@ function do_install_prerequisites() {
     # Install basic tools, editors etc.
     pacman -Sy || true
     install_pkgs vim git sudo unison curl rsync openssh avahi nss-mdns \
-        bash-completion wget tree arch-install-scripts
+        bash-completion wget tree arch-install-scripts make
 }
 
 function do_configure() {

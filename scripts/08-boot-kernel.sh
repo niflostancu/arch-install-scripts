@@ -13,3 +13,8 @@ function do_install_prerequisites() {
     fi
 }
 
+function do_configure() {
+    if idem_rsync_conf --all "boot-conf-generator/" "/etc/boot-conf-generator/"; then
+        "$SRC_DIR/lib/helpers/boot-conf-generator/run.sh"
+    fi
+}
