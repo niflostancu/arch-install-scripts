@@ -4,13 +4,19 @@
 
 function do_install_prerequisites() {
     # Install basic tools, editors etc.
+    pacman -Sy || true
     install_pkgs vim git sudo unison curl rsync openssh avahi nss-mdns \
         bash-completion wget tree arch-install-scripts
 }
 
 function do_configure() {
-    systemctl enable sshd.service
-    systemctl enable avahi-daemon
+    # ssh config
+    if idem_rsync_conf --all -- "ssh/" /etc/ssh/; then
+        systemctl restart sshd
+    fi
+    systemctl enable --now sshd.service
+
+    systemctl enable --now avahi-daemon
 
     # Sysctl config
     if idem_rsync_conf --all -- "sysctl.d/" /etc/sysctl.d/; then

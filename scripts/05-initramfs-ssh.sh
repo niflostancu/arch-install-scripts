@@ -6,6 +6,7 @@ INITCPIO_ENABLE_DROPBEAR=${INITCPIO_ENABLE_DROPBEAR:-0}
 
 function do_install_prerequisites() {
 	install_pkgs dropbear mkinitcpio
+	pacman -R dracut || true
 }
 
 function do_configure() {

@@ -21,6 +21,8 @@ function do_install_prerequisites() {
         return 0
     fi
 
+    ! pacman -Qq yay &>/dev/null || return 0
+
     rm -rf /tmp/yay-install
     run_as_builduser mkdir -p /tmp/yay-install
     (
