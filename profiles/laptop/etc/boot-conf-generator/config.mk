@@ -15,7 +15,9 @@ RDINIT_STYLE = systemd
 CMDLINE_CONSOLE = console=tty1
 #CMDLINE_EXTRA = pcie_port_pm=off
 
-BOOT_ENTRIES = cachyos cachyos-lts
+BOOT_ENTRIES = cachyos-legion cachyos cachyos-lts
+ENTRY_LABEL[cachyos-legion] = CachyOS (legion patches)
+ENTRY_KERNEL[cachyos-legion] = linux-cachyos-legion
 ENTRY_LABEL[cachyos] = CachyOS (latest)
 ENTRY_KERNEL[cachyos] = linux-cachyos
 ENTRY_LABEL[cachyos-lts] = CachyOS (lts)

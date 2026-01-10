@@ -78,23 +78,28 @@ function build_arch_package() {
         if [[ -n "$DIST_CLEAN" && -d "$PKG_BUILD_DEST" ]]; then
             rm -rf "$PKG_BUILD_DEST"
         fi
-        if [[ ! -f "$PKG_SOURCE/PKGBUILD" && ! -f "$PKG_BUILD_DEST/PKGBUILD" ]]; then
+        mkdir -p "$PKG_BUILD_DEST"
+        cd "$PKG_BUILD_DEST"
+        if [[ -f "$PKG_SOURCE/download.hook.sh" ]]; then
+            sh_log_debug "loading download.hook.sh"
+            source "$PKG_SOURCE/download.hook.sh"
+        elif [[ ! -f "$PKG_SOURCE/PKGBUILD" && ! -f "$PKG_BUILD_DEST/PKGBUILD" ]]; then
             sh_log_info "Downloading $1 src:"
             download_arch_pkg "$1"
         fi
         # copy the package source to the build destination
         rsync -rvh --times --mkpath "$PKG_SOURCE/" "$PKG_BUILD_DEST/"
-        cd "$PKG_BUILD_DEST"
 
+        cd "$PKG_BUILD_DEST"
         # check for PKGBUILD* patches
         shopt -s nullglob
         for pfile in PKGBUILD*.patch; do
-	        if ! patch -R -p1 -s -f --dry-run < "$pfile"; then
-		        sh_log_info "Applying patch: $pfile"
-		        patch -p1 < "$pfile"
-		    else
-		        sh_log_debug "Ignored patch (already applied): $pfile"
-	        fi
+            if ! patch -R -p1 -s -f --dry-run < "$pfile"; then
+                sh_log_info "Applying patch: $pfile"
+                patch -p1 < "$pfile"
+            else
+                sh_log_debug "Ignored patch (already applied): $pfile"
+            fi
         done
 
         sh_log_info "Building $1"
