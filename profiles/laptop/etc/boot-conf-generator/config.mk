@@ -13,7 +13,8 @@ RDINIT_STYLE = systemd
 
 # extra cmdline:
 CMDLINE_CONSOLE = console=tty1
-#CMDLINE_EXTRA = pcie_port_pm=off
+CMDLINE_EXTRA = snd_intel_dspcfg.dsp_driver=3
+#CMDLINE_EXTRA += pcie_port_pm=off 
 
 BOOT_ENTRIES = cachyos-legion cachyos cachyos-lts
 ENTRY_LABEL[cachyos-legion] = CachyOS (legion patches)
