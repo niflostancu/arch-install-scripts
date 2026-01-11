@@ -78,9 +78,9 @@ function build_arch_package() {
         if [[ -n "$DIST_CLEAN" && -d "$PKG_BUILD_DEST" ]]; then
             rm -rf "$PKG_BUILD_DEST"
         fi
-        mkdir -p "$PKG_BUILD_DEST"
-        cd "$PKG_BUILD_DEST"
         if [[ -f "$PKG_SOURCE/download.hook.sh" ]]; then
+            mkdir -p "$PKG_BUILD_DEST"
+            cd "$PKG_BUILD_DEST"
             sh_log_debug "loading download.hook.sh"
             source "$PKG_SOURCE/download.hook.sh"
         elif [[ ! -f "$PKG_SOURCE/PKGBUILD" && ! -f "$PKG_BUILD_DEST/PKGBUILD" ]]; then
@@ -93,6 +93,8 @@ function build_arch_package() {
         cd "$PKG_BUILD_DEST"
         # check for PKGBUILD* patches
         shopt -s nullglob
+        sh_log_debug "Build dest: $(pwd)"
+        sh_log_debug "$(ls -l)"
         for pfile in PKGBUILD*.patch; do
             if ! patch -R -p1 -s -f --dry-run < "$pfile"; then
                 sh_log_info "Applying patch: $pfile"

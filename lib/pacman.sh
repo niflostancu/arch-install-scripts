@@ -8,7 +8,8 @@ declare -g -a _PKGMAN_EXCLUDED=()
 
 # The unprivileged user used for building AUR packages
 BUILD_USER=aurbuild
-BUILD_CACHE_SRC="/home/$BUILD_USER/.cache/arch-build/_arch_src"
+BUILD_HOME="/home/$BUILD_USER"
+BUILD_CACHE_SRC="$BUILD_HOME/.cache/arch-build/_arch_src"
 
 # Installs the specified packages (best-effort, does not fail if one package
 # doesn't exist, just adds to PKG_WARNINGS).
@@ -137,7 +138,7 @@ function show_pkg_warnings() {
 }
 
 function run_as_builduser() {
-    sudo -u "$BUILD_USER" -- "$@"
+    sudo -u "$BUILD_USER" -- env DEBUG="$DEBUG" "$@"
 }
 
 # builds custom package from source (from the packages/ directory)

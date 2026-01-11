@@ -6,12 +6,17 @@ function do_install_prerequisites() {
     install_pkgs base-devel git pkgfile expac
 
     # check if the aurbuild user exists (we use it for building packages)
-    BUILD_HOME=/var/aur-build
     if ! id "$BUILD_USER" >/dev/null 2>/dev/null; then
         mkdir -p "$BUILD_HOME"
         echo "User $BUILD_USER created!"
         useradd -r -d "$BUILD_HOME" "$BUILD_USER"
         chown "$BUILD_USER":"$BUILD_USER" "$BUILD_HOME"
+    fi
+    _CUR_BUILD_HOME="$(getent passwd "$BUILD_USER" | cut -d: -f6)"
+    if [[ "$_CUR_BUILD_HOME" != "$BUILD_HOME" ]]; then
+        mkdir -p "$BUILD_HOME"
+        chown "$BUILD_USER":"$BUILD_USER" "$BUILD_HOME"
+        usermod -d "$BUILD_HOME" "$BUILD_USER"
     fi
     echo "$BUILD_USER ALL= (root) NOPASSWD: /usr/bin/pacman " > /etc/sudoers.d/$BUILD_USER
     usermod -aG disk "$BUILD_USER"
