@@ -25,6 +25,7 @@ function do_configure() {
     elif [[ "$USE_LOGIN_MANAGER" == "greetd" ]]; then
         mkdir -p /etc/greetd
         idem_rsync_conf "greetd/" "/etc/greetd/"
+        chmod +x /etc/greetd/*.sh
         systemctl disable sddm
         systemctl enable greetd
     fi
