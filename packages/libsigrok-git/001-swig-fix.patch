@@ -1,0 +1,13 @@
+diff --git i/bindings/python/sigrok/core/classes.i w/bindings/python/sigrok/core/classes.i
+index 90667f59..fec1a202 100644
+--- i/bindings/python/sigrok/core/classes.i
++++ w/bindings/python/sigrok/core/classes.i
+@@ -74,7 +74,7 @@ typedef guint pyg_flags_type;
+      */
+     if (!GLib) {
+         fprintf(stderr, "Import of gi.repository.GLib failed.\n");
+-        return nullptr;
++        return -1;
+     }
+     import_array();
+ %}

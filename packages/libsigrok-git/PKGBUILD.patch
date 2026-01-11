@@ -1,0 +1,30 @@
+Applies extra patches to libsigrok:
+
+Fix libsigrok compilation due to SWIG incompatibility (nullptr return from 
+module init).
+
+diff --git i/PKGBUILD w/PKGBUILD
+index b5dec49..11e7af7 100644
+--- i/PKGBUILD
++++ w/PKGBUILD
+@@ -17,13 +17,19 @@ conflicts=("${_gitname}")
+ provides=("${_gitname}")
+ source=("git://sigrok.org/${_gitname}"
+ )
+-sha512sums=('SKIP')
++source+=("001-swig-fix.patch")
++sha512sums=('SKIP' 'SKIP')
+ 
+ pkgver() {
+   cd "${srcdir}/${_gitname}"
+   git describe --exclude 'libsigrok-unreleased' --long | sed 's/^libsigrok-//;s/\([^-]*-g\)/r\1/;s/-/./g'
+ }
+ 
++prepare() {
++  cd "${srcdir}/${_gitname}"
++  patch -Np1 -i ../*.patch
++}
++
+ build() {
+   rm -rf "${srcdir}/build"
+   mkdir -p "${srcdir}/build"

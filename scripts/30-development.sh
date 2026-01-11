@@ -54,7 +54,10 @@ function do_install_prerequisites() {
 
     # Sigrok + Pulseview for logic analyzers
     #install_pkgs pulseview sigrok-cli
-    install_pkgs --aur libsigrokdecode-git libsigrok-git sigrok-cli-git
+    install_pkgs --aur libsigrokdecode-git
+    if ! check_pkg_installed libsigrok-git || [[ -n "$FORCE_REINSTALL" ]]; then
+        build_custom_pkg -i --noconfirm libsigrok-git
+    fi
     if ! check_pkg_installed pulseview-git || [[ -n "$FORCE_REINSTALL" ]]; then
         build_custom_pkg -i --noconfirm pulseview-git
     fi
