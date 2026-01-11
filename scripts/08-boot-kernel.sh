@@ -8,8 +8,9 @@ function do_install_prerequisites() {
     pacman -Qi systemd-boot-manager &>/dev/null && pacman -R systemd-boot-manager || true
     install_pkgs "$INSTALL_KERNEL_VARIANT-headers" "${ADD_PLATFORM_PACKAGES[@]}"
 
-    if [[ -n "$INSTALL_MICROCODE" ]]; then
-        install_pkgs "$INSTALL_MICROCODE"-ucode
+    # profile-specific firmware / microcode
+    if [[ -n "$INSTALL_FIRMWARE" ]]; then
+        install_pkgs "${INSTALL_FIRMWARE[@]}"
     fi
 }
 
