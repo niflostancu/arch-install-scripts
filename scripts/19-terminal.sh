@@ -5,7 +5,7 @@
 function do_install_prerequisites() {
     install_pkgs zsh tmux neovim python-pynvim powerline-fonts xsel \
         the_silver_searcher minicom ruby fzf python-virtualenvwrapper xdotool \
-        ctags alacritty ripgrep
+        ctags alacritty ripgrep direnv
     # Neovim client in rust
     install_pkgs neovide
 }
