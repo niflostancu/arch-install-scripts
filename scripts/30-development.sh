@@ -28,7 +28,8 @@ function do_install_prerequisites() {
 
     # Python (3 only)
     install_pkgs python python-pip python-pylint python-pytest python-virtualenv
-    install_pkgs python-pipx python-coverage cython pypy3 python-gobject pyenv
+    install_pkgs python-pipx python-coverage cython pypy3 python-gobject pyenv \
+        uv
 
     # NodeJS
     install_pkgs nodejs npm yarn
