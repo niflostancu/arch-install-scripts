@@ -43,6 +43,9 @@ function do_install_prerequisites() {
         arm-none-eabi-gcc arm-none-eabi-gdb arm-none-eabi-newlib \
         gperf dfu-util platformio-core platformio-core-udev
 
+    # Radio / RF
+    install_pkgs gnuradio gnuradio-osmosdr
+
     # install openocd from git (since latest is old as fsck)
     install_pkgs --aur openocd-git
     # ofc we need to patch jimtcl first...
