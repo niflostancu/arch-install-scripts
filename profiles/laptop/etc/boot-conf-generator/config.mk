@@ -9,6 +9,7 @@ ROOT_LUKS_DEV = /dev/disk/by-partlabel/LinuxEnc
 ROOT_LVM_VOL = LaptopLinuxVol
 ROOT_LVM_PART = root
 ROOTFS_TYPE = xfs
+ROOTFS_FLAGS = rw,relatime,x-systemd.device-timeout=0
 RDINIT_STYLE = systemd
 
 # extra cmdline:
