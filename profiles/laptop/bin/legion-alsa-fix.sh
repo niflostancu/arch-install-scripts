@@ -12,7 +12,8 @@ sudo cp -f "$SOUND_PATCHES/fix/firmware/aw88399_acf.bin" /lib/firmware/aw88399_a
 
 # copy Alsa UCM2 topologies
 sudo cp -f "$ALSA_UCM2_ANALOG" /usr/share/alsa/ucm2/HDA/HiFi-analog.conf
-sudo cp -f "$SOUND_PATCHES/fix/ucm2/HiFi-mic.conf" /usr/share/alsa/ucm2/HDA/HiFi-mic.conf
+# not present anymore
+#sudo cp -f "$SOUND_PATCHES/fix/ucm2/HiFi-mic.conf" /usr/share/alsa/ucm2/HDA/HiFi-mic.conf
 
 HW_ID=${1:-1}
 

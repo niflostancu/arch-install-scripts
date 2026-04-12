@@ -6,7 +6,7 @@ build_configure
 makepkg -S "${MAKEPKG_ARGS[@]}"
 sed -i 's|^\s*_pkgsuffix=cachyos|_pkgsuffix=cachyos-legion|g' PKGBUILD
 
-LEGION_PATCH_NAME="16iax10h-audio-linux-6.19.8.patch"
+LEGION_PATCH_NAME="16iax10h-audio-linux-6.19.11.patch"
 LEGION_PATCH_SRC="$PKG_BUILD_DEST/laptop-patches/fix/patches/$LEGION_PATCH_NAME"
 #LEGION_PATCH_NAME=aw88399-legion.patch
 #LEGION_PATCH_SRC="$PKG_BUILD_DEST/aw88399-legion.patch"
