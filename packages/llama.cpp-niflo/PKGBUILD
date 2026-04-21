@@ -20,6 +20,8 @@ depends=(
   rocblas
   python
   vulkan-icd-loader
+  spirv-headers
+  openblas
 )
 makedepends=(
   cmake
@@ -50,15 +52,14 @@ sha256sums=('5bdb48d76549e11c0fbdc2a058538f1dd881830efc3fd5e44a11bf32d2bb2d70'
             'e4856f186f69cd5dbfcc4edec9f6b6bd08e923bceedd8622eeae1a2595beb2ec')
 
 if [ "$_llama_amd_turboquant" -eq "1" ]; then
-  # source[0]="git+https://github.com/domvox/llama.cpp-turboquant-hip#branch=feature/turboquant-hip-port-clean"
-  source[0]="git+https://github.com/domvox/llama.cpp-turboquant-hip#branch=main"
+  source[0]="git+https://github.com/TheTom/llama-cpp-turboquant.git#branch=feature/turboquant-kv-cache"
   sha256sums[0]="SKIP"
 fi
 
 prepare() {
   if [ "$_llama_amd_turboquant" -eq "1" ]; then
-    ln -sf "${_pkgname}-turboquant-hip" llama.cpp
-    ( cd "llama.cpp"; patch -Np1 -i "../../turboquant-fix-rpc.patch" )
+    ln -sf "llama-cpp-turboquant" llama.cpp
+    # ( cd "llama.cpp"; patch -Np1 -i "../../turboquant-fix-rpc.patch" )
   else
     ln -sf "${_pkgname}-${pkgver}" llama.cpp
   fi
@@ -87,11 +88,14 @@ build() {
     -DGGML_BUILD_TESTS=OFF
     -DGGML_LTO=ON
     -DGGML_RPC=ON
+    # enable OpenBLAS for CPU
+    -DGGML_BLAS=ON
+    -DGGML_BLAS_VENDOR=OpenBLAS
     # ROCm part
     -DGGML_HIP=ON
     -DGGML_HIP_GRAPHS=ON
     # -DGGML_HIP_NO_VMM=ON
-    # -DGGML_HIP_ROCWMMA_FATTN=ON
+    -DGGML_HIP_ROCWMMA_FATTN=OFF
     -DHIP_PLATFORM=amd
     -DGGML_CUDA_FA_ALL_QUANTS=ON
     # Vulkan part
