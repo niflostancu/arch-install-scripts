@@ -29,7 +29,11 @@ function do_configure() {
         systemctl stop dnscrypt-proxy.socket
         systemctl restart dnscrypt-proxy.service
     fi
+    systemctl stop systemd-resolved.service
+    systemctl disable systemd-resolved.service
+    systemctl mask systemd-resolved.service
     if ! grep -Eq 'nameserver\s+127.0.0.1$' /etc/resolv.conf; then
+        rm -f /etc/resolv.conf
         echo "Installing dnscrypt as nameserver..."
         sed -i -e '$anameserver 127.0.0.1' -e '/nameserver/d' /etc/resolv.conf
     fi
