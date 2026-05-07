@@ -6,17 +6,17 @@ build_configure
 makepkg -S "${MAKEPKG_ARGS[@]}"
 sed -i 's|^\s*_pkgsuffix=cachyos|_pkgsuffix=cachyos-legion|g' PKGBUILD
 
-LEGION_PATCH_NAME="16iax10h-audio-linux-6.19.11.patch"
-LEGION_PATCH_SRC="$PKG_BUILD_DEST/laptop-patches/fix/patches/$LEGION_PATCH_NAME"
-#LEGION_PATCH_NAME=aw88399-legion.patch
-#LEGION_PATCH_SRC="$PKG_BUILD_DEST/aw88399-legion.patch"
+# LEGION_PATCH_NAME="legion_pro7_6.19.14.patch"
+# LEGION_PATCH_SRC="$PKG_BUILD_DEST/laptop-patches/patches/audio/$LEGION_PATCH_NAME"
+LEGION_PATCH_NAME=aw88399-legion.patch
+LEGION_PATCH_SRC="$PKG_BUILD_DEST/aw88399-legion.patch"
 
 cp -f "$LEGION_PATCH_SRC" ./
 sed -i '/^prepare()/i source+=("'"$LEGION_PATCH_NAME"'")' PKGBUILD
 echo "b2sums+=('$(b2sum "$LEGION_PATCH_NAME"| cut -d" " -f1)')" >> PKGBUILD
 
 # add fuzz to patch
-sed -i 's|^\(\s*\)patch -Np1|\1patch -Np1 --fuzz=3|' PKGBUILD
+sed -i 's|^\(\s*\)patch -Np1|\1patch -Np1 --fuzz=6|' PKGBUILD
 
 cat "$PKG_BUILD_DEST/legion-extra.config" >> config
 echo "b2sums[1]='$(b2sum "config"| cut -d" " -f1)'" >> PKGBUILD
