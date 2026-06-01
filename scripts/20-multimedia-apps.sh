@@ -7,8 +7,8 @@ function do_install_prerequisites() {
         lame cdrtools cdrdao dvd+rw-tools k3b digikam mpd pipewire \
         pipewire-pulse gwenview kamera kcolorchooser kdegraphics-thumbnailers \
         kolourpaint kruler okular skanlite spectacle svgpart
-    # Image manipulation
-    install_pkgs gimp imagemagick inkscape
+    # Image drawing / manipulation
+    install_pkgs gimp imagemagick inkscape drawy xournalpp
     # Music / video editing / conversion
     install_pkgs ffmpeg kid3 avidemux-qt
     install_pkgs --aur youtube-dl
