@@ -11,7 +11,6 @@ function do_install_prerequisites() {
         kolourpaint skanlite spectacle okular kruler
     # wayland utils
     install_pkgs egl-wayland 
-    install_pkgs --aur wl-clipboard-git
     # QT5 Plasma Integration
     install_pkgs plasma5-integration kwayland5 oxygen5
     # Misc apps

@@ -3,11 +3,14 @@
 # Installs fancy terminal tools
 
 function do_install_prerequisites() {
-    install_pkgs zsh tmux neovim python-pynvim powerline-fonts xsel \
-        the_silver_searcher minicom ruby fzf python-virtualenvwrapper xdotool \
-        ctags alacritty ripgrep direnv
-    # Neovim client in rust
-    install_pkgs neovide
+    # terminal emulators & shells
+    install_pkgs alacritty ghostty zsh tmux powerline-fonts
+    # vim, GUI + integration tools
+    install_pkgs neovim neovide python-pynvim wl-clipboard
+    # finders
+    install_pkgs ripgrep fzf the_silver_searcher 
+    # misc tools
+    install_pkgs ctags direnv jq yq
 }
 
 function do_configure() {
